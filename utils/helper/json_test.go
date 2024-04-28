@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/backendmagang/project-1/models"
+	"github.com/backend-magang/cats-social-media/models"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 )

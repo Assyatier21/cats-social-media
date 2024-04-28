@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/backendmagang/project-1/models"
-	"github.com/backendmagang/project-1/models/entity"
-	"github.com/backendmagang/project-1/utils/constant"
+	"github.com/backend-magang/cats-social-media/models"
+	"github.com/backend-magang/cats-social-media/models/entity"
+	"github.com/backend-magang/cats-social-media/utils/constant"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
 )

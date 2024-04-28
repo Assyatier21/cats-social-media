@@ -6,8 +6,8 @@ import (
 	"log"
 	"time"
 
-	cfg "github.com/backendmagang/project-1/config"
-	"github.com/backendmagang/project-1/models/entity"
+	cfg "github.com/backend-magang/cats-social-media/config"
+	"github.com/backend-magang/cats-social-media/models/entity"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
 )

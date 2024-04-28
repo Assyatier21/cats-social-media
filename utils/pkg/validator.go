@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -16,7 +17,12 @@ func (cv *DataValidator) Validate(i interface{}) error {
 }
 
 func SetupValidator() *validator.Validate {
-	return validator.New()
+	v := validator.New()
+
+	v.RegisterValidation("validateRaces", customRaceEnum)
+	v.RegisterValidation("validateAgeInMonth", customValidateAge)
+
+	return v
 }
 
 func BindValidate(c echo.Context, req interface{}) (err error) {
@@ -31,4 +37,34 @@ func BindValidate(c echo.Context, req interface{}) (err error) {
 	}
 
 	return
+}
+
+func customRaceEnum(fl validator.FieldLevel) bool {
+	allowedValues := []string{
+		"Persian",
+		"Maine Coon",
+		"Siamese",
+		"Ragdoll",
+		"Bengal",
+		"Sphynx",
+		"British Shorthair",
+		"Abyssinian",
+		"Scottish Fold",
+		"Birman",
+	}
+
+	value := fl.Field().String()
+	for _, v := range allowedValues {
+		if strings.EqualFold(value, v) {
+			return true
+		}
+	}
+	return false
+}
+
+func customValidateAge(fl validator.FieldLevel) bool {
+	value := fl.Field().String()
+
+	parts := strings.Split(value, "=")
+	return len(parts) == 2
 }

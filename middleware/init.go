@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/backendmagang/project-1/utils/pkg"
+	"github.com/backend-magang/cats-social-media/utils/pkg"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )

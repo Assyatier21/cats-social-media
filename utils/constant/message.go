@@ -36,4 +36,6 @@ const (
 	FAILED_UPDATE_CATEGORY_ELASTIC  = "failed to update category in elasticsearch"
 	FAILED_DELETE_CATEGORY_POSTGRES = "failed to delete category in postgres"
 	FAILED_DELETE_CATEGORY_ELASTIC  = "failed to delete category in elasticsearch"
+
+	FAILED_GET_CATS = "failed to get list of cats"
 )

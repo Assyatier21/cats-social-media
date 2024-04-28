@@ -24,7 +24,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Swagger Simple CMS Admin",
+	Title:            "Swagger Cats Social Media",
 	Description:      "This is a documentation of Simple Content Management System V2.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

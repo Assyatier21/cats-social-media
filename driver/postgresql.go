@@ -1,22 +1,22 @@
 package driver
 
 import (
-	"database/sql"
+	cf "github.com/backend-magang/cats-social-media/config"
+	"github.com/jmoiron/sqlx"
 
 	_ "github.com/lib/pq"
 
 	"log"
-
-	"github.com/backendmagang/project-1/config"
 )
 
-func InitPostgres(cfg config.DBConfig) *sql.DB {
-	psqlInfo := cfg.GetDSN()
-	db, err := sql.Open("postgres", psqlInfo)
+func InitPostgres(config cf.Config) *sqlx.DB {
+	psqlInfo := config.GetDSN()
+	db, err := sqlx.Connect("postgres", psqlInfo)
 	if err != nil {
-		log.Println(err)
+		log.Fatal(err)
 		return nil
 	}
+
 	log.Println("[Database] initialized...")
 
 	err = db.Ping()

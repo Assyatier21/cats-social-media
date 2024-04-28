@@ -2,30 +2,20 @@ package postgres
 
 import (
 	"context"
-	"database/sql"
 
-	"github.com/backendmagang/project-1/models/entity"
+	"github.com/backend-magang/cats-social-media/models/entity"
+	"github.com/jmoiron/sqlx"
 )
 
 type RepositoryHandler interface {
-	GetArticles(ctx context.Context, req entity.GetArticlesRequest) ([]entity.ArticleResponse, error)
-	GetArticleDetails(ctx context.Context, req entity.GetArticleDetailsRequest) (entity.ArticleResponse, error)
-	InsertArticle(ctx context.Context, article entity.InsertArticleRequest) (entity.ArticleResponse, error)
-	UpdateArticle(ctx context.Context, article entity.UpdateArticleRequest) (entity.ArticleResponse, error)
-	DeleteArticle(ctx context.Context, req entity.DeleteArticleRequest) error
-
-	GetCategoryTree(ctx context.Context, req entity.GetCategoriesRequest) ([]entity.Category, error)
-	GetCategoryDetails(ctx context.Context, req entity.GetCategoryDetailsRequest) (entity.Category, error)
-	InsertCategory(ctx context.Context, category entity.InsertCategoryRequest) (entity.InsertCategoryRequest, error)
-	UpdateCategory(ctx context.Context, category entity.UpdateCategoryRequest) error
-	DeleteCategory(ctx context.Context, req entity.DeleteCategoryRequest) error
+	GetListCat(ctx context.Context, req entity.GetListCatRequest) (result []entity.Cat, err error)
 }
 
 type repository struct {
-	db *sql.DB
+	db *sqlx.DB
 }
 
-func NewRepository(db *sql.DB) RepositoryHandler {
+func NewRepository(db *sqlx.DB) RepositoryHandler {
 	return &repository{
 		db: db,
 	}

@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/backendmagang/project-1/utils/constant"
+	"github.com/backend-magang/cats-social-media/utils/constant"
 
 	"golang.org/x/crypto/bcrypt"
 )

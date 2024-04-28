@@ -1,44 +1,61 @@
 package postgres
 
 import (
-	"context"
-	"log"
+	"strings"
 
-	"github.com/backendmagang/project-1/models/entity"
+	"github.com/backend-magang/cats-social-media/models/entity"
+	"github.com/spf13/cast"
 )
 
-func (r *repository) buildInsertedArticleResponse(req entity.InsertArticleRequest) (article entity.ArticleResponse) {
-	return entity.ArticleResponse{
-		ID:           req.ID,
-		Title:        req.Title,
-		Slug:         req.Slug,
-		HTMLContent:  req.HTMLContent,
-		Metadata:     req.Metadata,
-		CreatedAt:    req.CreatedAt,
-		UpdatedAt:    req.UpdatedAt,
-		CategoryList: r.buildCategoryList(req.CategoryIDs),
-	}
-}
+func buildQueryGetListCats(req entity.GetListCatRequest) (string, []interface{}) {
+	var queryBuilder strings.Builder
+	var args []interface{}
 
-func (r *repository) buildUpdatedArticleResponse(req entity.UpdateArticleRequest) (article entity.ArticleResponse) {
-	return entity.ArticleResponse{
-		ID:           req.ID,
-		Title:        req.Title,
-		Slug:         req.Slug,
-		HTMLContent:  req.HTMLContent,
-		Metadata:     req.Metadata,
-		CreatedAt:    req.CreatedAt,
-		UpdatedAt:    req.UpdatedAt,
-		CategoryList: r.buildCategoryList(req.CategoryIDs),
-	}
-}
+	queryBuilder.WriteString("SELECT * FROM cats WHERE 1=1")
 
-func (r *repository) buildCategoryList(categoryIDs []int) []entity.CategoryResponse {
-	categories, err := r.GetCategoriesByIDs(context.Background(), categoryIDs)
-	if err != nil {
-		log.Println("[Repository][Postgres][buildCategoryList] error failed to get category by ids, err: ", err)
-		return nil
+	if req.ID != "" {
+		queryBuilder.WriteString(" AND id = ?")
+		args = append(args, cast.ToInt(req.ID))
 	}
 
-	return categories
+	if req.Race != "" {
+		queryBuilder.WriteString(" AND race = ?")
+		args = append(args, req.Race)
+	}
+
+	if req.Sex != "" {
+		queryBuilder.WriteString(" AND sex = ?")
+		args = append(args, req.Sex)
+	}
+
+	if req.Match != "" {
+		queryBuilder.WriteString(" AND is_already_matched = ?")
+		args = append(args, cast.ToBool(req.Match))
+	}
+
+	if req.Age != "" {
+
+		switch req.AgeOperator {
+		case ">":
+			queryBuilder.WriteString(" AND age >= ?")
+		case "<":
+			queryBuilder.WriteString(" AND age <= ?")
+		case "=":
+			queryBuilder.WriteString(" AND age = ?")
+		}
+
+		args = append(args, cast.ToInt(req.AgeValue))
+	}
+
+	if cast.ToBool(req.Owned) {
+		queryBuilder.WriteString(" AND user_id = ?")
+		args = append(args, cast.ToInt(req.UserID))
+	}
+
+	if req.Search != "" {
+		queryBuilder.WriteString(" AND name = ?")
+		args = append(args, req.Search)
+	}
+
+	return queryBuilder.String(), args
 }

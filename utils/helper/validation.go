@@ -6,8 +6,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/backendmagang/project-1/models"
-	"github.com/backendmagang/project-1/models/entity"
+	"github.com/backend-magang/cats-social-media/models"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -89,15 +88,4 @@ func BuildOrderByQuery(order_by string) bool {
 	}
 
 	return order_by_bool
-}
-
-func GeArticleRequestValidation(req entity.GetArticlesRequest) entity.GetArticlesRequest {
-	req.SortBy = BuildSortByQuery(req.SortBy)
-	req.OrderByBool = BuildOrderByQuery(req.OrderBy)
-
-	if req.Limit == 0 {
-		req.Limit = 10
-	}
-
-	return req
 }

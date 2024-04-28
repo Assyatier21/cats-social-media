@@ -3,7 +3,13 @@ package main
 import (
 	"fmt"
 
-	"github.com/backendmagang/project-1/config"
+	"github.com/backend-magang/cats-social-media/config"
+	"github.com/backend-magang/cats-social-media/driver"
+	"github.com/backend-magang/cats-social-media/internal/handler/api"
+	"github.com/backend-magang/cats-social-media/internal/repository/postgres"
+	"github.com/backend-magang/cats-social-media/internal/usecase"
+	"github.com/backend-magang/cats-social-media/middleware"
+	"github.com/backend-magang/cats-social-media/router"
 	"github.com/labstack/echo/v4"
 )
 
@@ -16,18 +22,14 @@ func main() {
 	// Load Config
 	cfg := config.Load()
 
-	// dbClient := driver.InitPostgres(cfg.PostgresConfig)
-	// esClient := driver.InitElasticClient(cfg.ElasticConfig)
-	// redisClient := driver.InitRedisClient(cfg.RedisConfig)
+	dbClient := driver.InitPostgres(cfg)
 
-	// postgresRepository := postgres.NewRepository(dbClient)
-	// elasticRepository := elasticsearch.NewElasticRepository(esClient, cfg.ElasticConfig)
+	postgresRepository := postgres.NewRepository(dbClient)
+	usecase := usecase.NewUsecase(postgresRepository)
+	handler := api.NewHandler(usecase)
 
-	// usecase := usecase.NewUsecase(postgresRepository, elasticRepository, redisClient)
-	// handler := api.NewHandler(usecase)
-
-	// router.InitRouter(server, handler)
-	// middleware.InitMiddlewares(server)
+	router.InitRouter(server, handler)
+	middleware.InitMiddlewares(server)
 
 	host := fmt.Sprintf("%s:%s", cfg.AppHost, cfg.AppPort)
 	server.Start(host)

@@ -1,14 +1,13 @@
 package router
 
 import (
-	"github.com/backendmagang/project-1/internal/handler/api"
-	_ "github.com/backendmagang/project-1/middleware"
+	"github.com/backend-magang/cats-social-media/internal/handler/api"
+	_ "github.com/backend-magang/cats-social-media/middleware"
 	"github.com/labstack/echo/v4"
 
-	_ "github.com/backendmagang/project-1/docs"
+	_ "github.com/backend-magang/cats-social-media/docs"
 )
 
-func InitRouter(server *echo.Echo, handler api.DeliveryHandler) {
-	InitArticleRouter(server, handler)
-	InitCategoryRouter(server, handler)
+func InitRouter(server *echo.Echo, handler api.Handler) {
+	InitCatRouter(server, handler)
 }
