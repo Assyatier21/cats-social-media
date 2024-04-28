@@ -1,0 +1,10 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a documentation of Simple Content Management System V2.",
+        "title": "Swagger Simple CMS Admin",
+        "contact": {},
+        "version": "2.0"
+    },
+    "paths": {}
+}

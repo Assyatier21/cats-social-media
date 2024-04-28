@@ -1,0 +1,26 @@
+{
+  "APP_CONFIG": {
+    "APP_HOST": "localhost",
+    "APP_PORT": "8888"
+  },
+  "POSTGRESQL": {
+    "POSTGRES_HOST": "localhost",
+    "POSTGRES_PORT": 5432,
+    "POSTGRES_DB": "database-name",
+    "POSTGRES_SCHEMA": "database-schema",
+    "POSTGRES_USER": "username",
+    "POSTGRES_PASSWORD": "somepassword"
+  },
+  "ELASTICSEARCH": {
+    "ESADDRESS": "http://127.0.0.1:9200",
+    "ES_INDEX_ARTICLE": "index_article",
+    "ES_INDEX_CATEGORY": "index_category"
+  },
+  "REDIS_CONFIG": {
+    "REDIS_ADDRESS": "http://127.0.0.1:6379",
+    "REDIS_USERNAME": "username",
+    "REDIS_PASSWORD": "",
+    "REDIS_DB": 0
+  },
+  "JWT_SECRET_KEY": "JWT-Secret-Key"
+}
