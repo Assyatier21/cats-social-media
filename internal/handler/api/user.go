@@ -23,3 +23,17 @@ func (h *handler) RegisterUser(c echo.Context) (err error) {
 	resp := h.usecase.RegisterUser(ctx, request)
 	return helper.WriteResponse(c, resp)
 }
+
+func (h *handler) LoginUser(c echo.Context) (err error) {
+	ctx, cancel := helper.GetContext()
+	defer cancel()
+
+	request := entity.LoginUserRequest{}
+	err = pkg.BindValidate(c, &request)
+	if err != nil {
+		return helper.WriteResponse(c, models.StandardResponseReq{Code: http.StatusBadRequest, Error: err})
+	}
+
+	resp := h.usecase.LoginUser(ctx, request)
+	return helper.WriteResponse(c, resp)
+}

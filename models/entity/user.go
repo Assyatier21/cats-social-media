@@ -24,9 +24,9 @@ type (
 		Password string `json:"password" validate:"required,min=5,max=15"`
 	}
 
-	GetUserReq struct {
-		Email    string `json:"email"`
-		Password string `json:"password"`
+	LoginUserRequest struct {
+		Email    string `json:"email" validate:"required,email"`
+		Password string `json:"password" validate:"required,min=5,max=15"`
 	}
 
 	UserJWT struct {

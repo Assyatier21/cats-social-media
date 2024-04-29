@@ -9,6 +9,7 @@ type Handler interface {
 	GetListCat(c echo.Context) (err error)
 
 	RegisterUser(c echo.Context) (err error)
+	LoginUser(c echo.Context) (err error)
 }
 
 type handler struct {
