@@ -28,9 +28,8 @@ func GenerateToken(registry entity.User) (t string, err error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
 	claims["name"] = registry.Name
-	claims["phone"] = registry.Phone
-	claims["role"] = registry.Role
-	claims["expired_at"] = time.Now().Add(60 * time.Minute)
+	claims["email"] = registry.Email
+	claims["expired_at"] = time.Now().Add(8 * time.Hour)
 
 	t, err = token.SignedString([]byte(getJWTSecretKey()))
 	if err != nil {
@@ -64,8 +63,7 @@ func ParseTokenJWT(tokenString string) (userClaims entity.UserClaimsResponse, er
 	}
 	userClaims = entity.UserClaimsResponse{
 		Name:      claims["name"].(string),
-		Phone:     claims["phone"].(string),
-		Role:      claims["role"].(string),
+		Email:     claims["email"].(string),
 		ExpiredAt: expiredAt,
 	}
 

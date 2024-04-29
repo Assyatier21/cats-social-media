@@ -46,21 +46,10 @@ func TokenValidationMiddleware(private bool) echo.MiddlewareFunc {
 			}
 
 			userClaims.Name = claims["name"].(string)
-			userClaims.Phone = claims["phone"].(string)
-			userClaims.Role = claims["role"].(string)
+			userClaims.Email = claims["email"].(string)
 			expiredAtStr, _ := claims["expired_at"].(string)
 			expiredAt, _ := time.Parse(time.RFC3339, expiredAtStr)
 			userClaims.ExpiredAt = expiredAt
-
-			if IsPrivate(userClaims.Role, private) {
-				response := models.StandardResponse{
-					Code:    http.StatusUnauthorized,
-					Status:  constant.FAILED,
-					Message: "Invalid token claims",
-					Error:   errors.New("invalid token claims"),
-				}
-				return c.JSON(http.StatusUnauthorized, response)
-			}
 
 			if IsTokenExpired(expiredAt) {
 				response := models.StandardResponse{

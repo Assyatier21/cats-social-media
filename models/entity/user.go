@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"database/sql"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -8,33 +9,42 @@ import (
 
 type (
 	User struct {
-		Phone    string `json:"phone"`
-		Name     string `json:"name"`
-		Role     string `json:"role"`
-		Password string `json:"password"`
+		ID        int          `json:"id" db:"id"`
+		Email     string       `json:"email" db:"email"`
+		Name      string       `json:"name" db:"name"`
+		Password  string       `json:"password" db:"password"`
+		CreatedAt time.Time    `json:"created_at" db:"created_at"`
+		UpdatedAt time.Time    `json:"updated_at" db:"updated_at"`
+		DeletedAt sql.NullTime `json:"deleted_at,omitempty" db:"deleted_at"`
+	}
+
+	CreateUserRequest struct {
+		Email    string `json:"email" validate:"required,email"`
+		Name     string `json:"name" validate:"required,min=5,max=50"`
+		Password string `json:"password" validate:"required,min=5,max=15"`
 	}
 
 	GetUserReq struct {
-		Phone    string `json:"phone"`
+		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
 
 	UserJWT struct {
-		Phone string `json:"phone"`
-		Token string `json:"token"`
+		Email string `json:"email"`
+		Name  string `json:"name"`
+		Token string `json:"accessToken"`
 	}
 
 	UserClaims struct {
 		Name      string               `json:"name"`
-		Phone     string               `json:"phone"`
-		Role      string               `json:"role"`
+		Email     string               `json:"email"`
 		ExpiredAt time.Time            `json:"expired_at"`
 		Claims    jwt.RegisteredClaims `json:"claims"`
 	}
+
 	UserClaimsResponse struct {
 		Name      string    `json:"name"`
-		Phone     string    `json:"phone"`
-		Role      string    `json:"role"`
+		Email     string    `json:"email"`
 		ExpiredAt time.Time `json:"expired_at"`
 	}
 )

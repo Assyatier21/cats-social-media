@@ -10,10 +10,6 @@ import (
 )
 
 func (u *usecase) GetListCat(ctx context.Context, req entity.GetListCatRequest) models.StandardResponseReq {
-	var (
-		cats = []entity.Cat{}
-	)
-
 	if req.Age != "" {
 		builFilterAgeRequest(&req)
 	}

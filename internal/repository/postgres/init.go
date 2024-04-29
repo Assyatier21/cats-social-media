@@ -9,6 +9,9 @@ import (
 
 type RepositoryHandler interface {
 	GetListCat(ctx context.Context, req entity.GetListCatRequest) (result []entity.Cat, err error)
+
+	InsertUser(ctx context.Context, req entity.User) (err error)
+	FindUserByEmail(ctx context.Context, email string) (result entity.User, err error)
 }
 
 type repository struct {

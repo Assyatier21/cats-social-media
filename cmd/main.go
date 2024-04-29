@@ -25,7 +25,7 @@ func main() {
 	dbClient := driver.InitPostgres(cfg)
 
 	postgresRepository := postgres.NewRepository(dbClient)
-	usecase := usecase.NewUsecase(postgresRepository)
+	usecase := usecase.NewUsecase(cfg, postgresRepository)
 	handler := api.NewHandler(usecase)
 
 	router.InitRouter(server, handler)

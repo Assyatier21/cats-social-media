@@ -9,8 +9,6 @@ func InitCatRouter(e *echo.Echo, handler api.Handler) {
 	v1 := e.Group("/v1")
 	cat := v1.Group("/cat")
 
-	_ = cat
-
 	cat.GET("", handler.GetListCat)
 	// article.GET("/:id", handler.GetArticleDetails)
 	// article.POST("", handler.InsertArticle)
