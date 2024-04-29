@@ -24,8 +24,8 @@ type Cat struct {
 
 type GetListCatRequest struct {
 	ID          string `params:"id"`
-	Limit       int    `params:"limit"`
-	Offset      int    `params:"offset"`
+	Limit       string `params:"limit" validate:"omitempty,number"`
+	Offset      string `params:"offset" validate:"omitempty,number"`
 	Race        string `params:"race" validate:"omitempty,validateRaces"`
 	Sex         string `params:"sex" validate:"omitempty,oneof=male female"`
 	Match       string `params:"isAlreadyMatched"`

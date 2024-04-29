@@ -17,14 +17,22 @@ func (h *handler) GetListCat(c echo.Context) (err error) {
 
 	request := entity.GetListCatRequest{
 		ID:     c.QueryParam("id"),
-		Limit:  cast.ToInt(c.QueryParam("limit")),
-		Offset: cast.ToInt(c.QueryParam("offset")),
+		Limit:  c.QueryParam("limit"),
+		Offset: c.QueryParam("offset"),
 		Race:   c.QueryParam("race"),
 		Sex:    c.QueryParam("sex"),
 		Match:  c.QueryParam("isAlreadyMatched"),
 		Age:    c.QueryParam("ageInMonth"),
 		Owned:  c.QueryParam("owned"),
 		Search: c.QueryParam("search"),
+	}
+
+	if cast.ToInt(request.Limit) == 0 {
+		request.Limit = "10"
+	}
+
+	if cast.ToInt(request.Offset) == 0 {
+		request.Offset = "0"
 	}
 
 	err = pkg.BindValidate(c, &request)

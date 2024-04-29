@@ -57,5 +57,8 @@ func buildQueryGetListCats(req entity.GetListCatRequest) (string, []interface{})
 		args = append(args, req.Search)
 	}
 
+	queryBuilder.WriteString(" ORDER BY created_at DESC LIMIT ? OFFSET ?")
+	args = append(args, cast.ToInt(req.Limit), cast.ToInt(req.Offset))
+
 	return queryBuilder.String(), args
 }
