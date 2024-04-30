@@ -7,12 +7,14 @@ import (
 	"github.com/backend-magang/cats-social-media/internal/repository/postgres"
 	"github.com/backend-magang/cats-social-media/models"
 	"github.com/backend-magang/cats-social-media/models/entity"
+	"github.com/sirupsen/logrus"
 )
 
 type UsecaseHandler interface {
 	GetListCat(ctx context.Context, req entity.GetListCatRequest) models.StandardResponseReq
 	CreateCat(ctx context.Context, req entity.CreateCatRequest) models.StandardResponseReq
 	UpdateCat(ctx context.Context, req entity.UpdateCatRequest) models.StandardResponseReq
+	MatchCat(ctx context.Context, req entity.MatchCatRequest) models.StandardResponseReq
 
 	RegisterUser(ctx context.Context, req entity.CreateUserRequest) models.StandardResponseReq
 	LoginUser(ctx context.Context, req entity.LoginUserRequest) models.StandardResponseReq
@@ -20,12 +22,14 @@ type UsecaseHandler interface {
 
 type usecase struct {
 	cfg        config.Config
+	logger     *logrus.Logger
 	repository postgres.RepositoryHandler
 }
 
-func NewUsecase(cfg config.Config, repository postgres.RepositoryHandler) UsecaseHandler {
+func NewUsecase(cfg config.Config, log *logrus.Logger, repository postgres.RepositoryHandler) UsecaseHandler {
 	return &usecase{
 		cfg:        cfg,
+		logger:     log,
 		repository: repository,
 	}
 }

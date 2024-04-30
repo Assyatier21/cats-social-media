@@ -13,6 +13,7 @@ func InitCatRouter(e *echo.Echo, handler api.Handler) {
 	cat.GET("", handler.GetListCat)
 	cat.POST("", handler.CreateCat)
 	cat.PUT("/:id", handler.UpdateCat)
+	cat.POST("/match", handler.MatchCat)
 	// article.GET("/:id", handler.GetArticleDetails)
 	// article.POST("", handler.InsertArticle)
 	// article.PATCH("/:id", handler.UpdateArticle)

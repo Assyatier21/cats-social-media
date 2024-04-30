@@ -3,6 +3,7 @@ package middleware
 import (
 	"errors"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/backend-magang/cats-social-media/models"
@@ -19,7 +20,18 @@ func TokenValidationMiddleware() echo.MiddlewareFunc {
 			var userClaims = entity.UserClaimsResponse{}
 			tokenString := c.Request().Header.Get(Authorization)
 
-			token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+			if !strings.Contains(tokenString, "Bearer ") {
+				response := models.StandardResponse{
+					Code:    http.StatusUnauthorized,
+					Status:  constant.FAILED,
+					Message: "Invalid token",
+				}
+				return c.JSON(http.StatusUnauthorized, response)
+			}
+
+			tokenJWT := strings.Split(tokenString, " ")[1]
+
+			token, err := jwt.Parse(tokenJWT, func(token *jwt.Token) (interface{}, error) {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, errors.New("invalid token signing method")
 				}

@@ -11,6 +11,7 @@ import (
 	"github.com/backend-magang/cats-social-media/middleware"
 	"github.com/backend-magang/cats-social-media/router"
 	"github.com/labstack/echo/v4"
+	"github.com/sirupsen/logrus"
 )
 
 // @title           Swagger Backend Magang - Project 1
@@ -21,12 +22,13 @@ func main() {
 
 	// Load Config
 	cfg := config.Load()
+	logger := logrus.New()
 
 	dbClient := driver.InitPostgres(cfg)
 
-	postgresRepository := postgres.NewRepository(dbClient)
-	usecase := usecase.NewUsecase(cfg, postgresRepository)
-	handler := api.NewHandler(usecase)
+	postgresRepository := postgres.NewRepository(dbClient, logger)
+	usecase := usecase.NewUsecase(cfg, logger, postgresRepository)
+	handler := api.NewHandler(logger, usecase)
 
 	router.InitRouter(server, handler)
 	middleware.InitMiddlewares(server)
