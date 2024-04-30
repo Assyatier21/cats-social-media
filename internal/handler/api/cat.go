@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 
+	"github.com/backend-magang/cats-social-media/middleware"
 	"github.com/backend-magang/cats-social-media/models"
 	"github.com/backend-magang/cats-social-media/models/entity"
 	"github.com/backend-magang/cats-social-media/utils/helper"
@@ -41,5 +42,37 @@ func (h *handler) GetListCat(c echo.Context) (err error) {
 	}
 
 	resp := h.usecase.GetListCat(ctx, request)
+	return helper.WriteResponse(c, resp)
+}
+
+func (h *handler) CreateCat(c echo.Context) (err error) {
+	ctx, cancel := helper.GetContext()
+	defer cancel()
+
+	userClaims := middleware.ClaimToken(c)
+
+	request := entity.CreateCatRequest{UserID: userClaims.ID}
+	err = pkg.BindValidate(c, &request)
+	if err != nil {
+		return helper.WriteResponse(c, models.StandardResponseReq{Code: http.StatusBadRequest, Error: err})
+	}
+
+	resp := h.usecase.CreateCat(ctx, request)
+	return helper.WriteResponse(c, resp)
+}
+
+func (h *handler) UpdateCat(c echo.Context) (err error) {
+	ctx, cancel := helper.GetContext()
+	defer cancel()
+
+	userClaims := middleware.ClaimToken(c)
+
+	request := entity.UpdateCatRequest{UserID: userClaims.ID}
+	err = pkg.BindValidate(c, &request)
+	if err != nil {
+		return helper.WriteResponse(c, models.StandardResponseReq{Code: http.StatusBadRequest, Error: err})
+	}
+
+	resp := h.usecase.UpdateCat(ctx, request)
 	return helper.WriteResponse(c, resp)
 }

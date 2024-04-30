@@ -11,6 +11,8 @@ import (
 
 type UsecaseHandler interface {
 	GetListCat(ctx context.Context, req entity.GetListCatRequest) models.StandardResponseReq
+	CreateCat(ctx context.Context, req entity.CreateCatRequest) models.StandardResponseReq
+	UpdateCat(ctx context.Context, req entity.UpdateCatRequest) models.StandardResponseReq
 
 	RegisterUser(ctx context.Context, req entity.CreateUserRequest) models.StandardResponseReq
 	LoginUser(ctx context.Context, req entity.LoginUserRequest) models.StandardResponseReq

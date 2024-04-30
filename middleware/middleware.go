@@ -10,9 +10,10 @@ import (
 	"github.com/backend-magang/cats-social-media/utils/constant"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
+	"github.com/spf13/cast"
 )
 
-func TokenValidationMiddleware(private bool) echo.MiddlewareFunc {
+func TokenValidationMiddleware() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			var userClaims = entity.UserClaimsResponse{}
@@ -45,9 +46,10 @@ func TokenValidationMiddleware(private bool) echo.MiddlewareFunc {
 				return c.JSON(http.StatusUnauthorized, response)
 			}
 
-			userClaims.Name = claims["name"].(string)
-			userClaims.Email = claims["email"].(string)
-			expiredAtStr, _ := claims["expired_at"].(string)
+			userClaims.ID = cast.ToInt(claims["id"])
+			userClaims.Name = cast.ToString(claims["name"])
+			userClaims.Email = cast.ToString(claims["email"])
+			expiredAtStr := cast.ToString(claims["expired_at"])
 			expiredAt, _ := time.Parse(time.RFC3339, expiredAtStr)
 			userClaims.ExpiredAt = expiredAt
 
