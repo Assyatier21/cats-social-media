@@ -9,6 +9,7 @@ require (
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/labstack/echo/v4 v4.10.2
 	github.com/lib/pq v1.10.9
+	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.8.3
@@ -47,7 +48,8 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	golang.org/x/net v0.19.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sync v0.7.0 // indirect
+	golang.org/x/sys v0.19.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/tools v0.7.0 // indirect

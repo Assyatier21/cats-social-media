@@ -3,7 +3,6 @@ package postgres
 import (
 	"context"
 	"database/sql"
-	"log"
 
 	"github.com/backend-magang/cats-social-media/models/entity"
 )
@@ -24,7 +23,7 @@ func (r *repository) InsertUser(ctx context.Context, req entity.User) (err error
 	)
 
 	if err != nil {
-		log.Println("[Repository][User][InsertUser] failed to insert new user, err: ", err.Error())
+		r.logger.Errorf("[Repository][User][InsertUser] failed to insert new user, err: %s", err.Error())
 		return
 	}
 
@@ -39,7 +38,7 @@ func (r *repository) FindUserByEmail(ctx context.Context, email string) (result 
 
 	err = r.db.QueryRowxContext(ctx, query, email).StructScan(&result)
 	if err != nil && err != sql.ErrNoRows {
-		log.Println("[Repository][User][InsertUser] failed to find user by email "+email+", err: ", err.Error())
+		r.logger.Errorf("[Repository][User][FindByEmail] failed to find user by email %s, err: %s", email, err.Error())
 		return
 	}
 

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS cats (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
+    user_id INTEGER,
     name VARCHAR(255),
     race VARCHAR(255),
     sex VARCHAR(255),

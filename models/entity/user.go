@@ -30,12 +30,14 @@ type (
 	}
 
 	UserJWT struct {
+		ID    int    `json:"id"`
 		Email string `json:"email"`
 		Name  string `json:"name"`
 		Token string `json:"accessToken"`
 	}
 
 	UserClaims struct {
+		ID        int                  `json:"id"`
 		Name      string               `json:"name"`
 		Email     string               `json:"email"`
 		ExpiredAt time.Time            `json:"expired_at"`
@@ -43,6 +45,7 @@ type (
 	}
 
 	UserClaimsResponse struct {
+		ID        int       `json:"id"`
 		Name      string    `json:"name"`
 		Email     string    `json:"email"`
 		ExpiredAt time.Time `json:"expired_at"`

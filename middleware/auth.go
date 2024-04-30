@@ -27,6 +27,7 @@ func ClaimToken(ctx echo.Context) entity.UserClaimsResponse {
 func GenerateToken(registry entity.User) (t string, err error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
+	claims["id"] = registry.ID
 	claims["name"] = registry.Name
 	claims["email"] = registry.Email
 	claims["expired_at"] = time.Now().Add(8 * time.Hour)
