@@ -60,3 +60,12 @@ func (u *usecase) MatchCat(ctx context.Context, req entity.MatchCatRequest) mode
 
 	return models.StandardResponseReq{Code: http.StatusCreated, Message: constant.SUCCESS}
 }
+
+func (u *usecase) GetListMatchCat(ctx context.Context) models.StandardResponseReq {
+	result, err := u.repository.GetListMatchCat(ctx)
+	if err != nil {
+		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED_GET_CATS, Error: err}
+	}
+
+	return models.StandardResponseReq{Code: http.StatusOK, Message: constant.SUCCESS, Data: result}
+}

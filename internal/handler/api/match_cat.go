@@ -28,3 +28,11 @@ func (h *handler) MatchCat(c echo.Context) (err error) {
 	resp := h.usecase.MatchCat(ctx, request)
 	return helper.WriteResponse(c, resp)
 }
+
+func (h *handler) GetListMatchCat(c echo.Context) (err error) {
+	ctx, cancel := helper.GetContext()
+	defer cancel()
+
+	resp := h.usecase.GetListMatchCat(ctx)
+	return helper.WriteResponse(c, resp)
+}
