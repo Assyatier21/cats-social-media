@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"net/http"
 	"time"
 
@@ -49,6 +50,7 @@ func (u *usecase) MatchCat(ctx context.Context, req entity.MatchCatRequest) mode
 		MatchCatID:   targetCat.ID,
 		UserCatID:    userCat.ID,
 		Message:      req.Message,
+		Status:       entity.MatchCatStatusPending,
 		CreatedAt:    now,
 		UpdatedAt:    now,
 	}
@@ -59,4 +61,36 @@ func (u *usecase) MatchCat(ctx context.Context, req entity.MatchCatRequest) mode
 	}
 
 	return models.StandardResponseReq{Code: http.StatusCreated, Message: constant.SUCCESS}
+}
+
+func (u *usecase) RejectMatchCat(ctx context.Context, req entity.UpdateMatchCatRequest) models.StandardResponseReq {
+	var (
+		now = time.Now()
+	)
+
+	matchCat, err := u.repository.FindMatchByID(ctx, req.MatchCatID)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_CAT_NOT_FOUND, Error: err}
+		}
+		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
+	}
+
+	if matchCat.Status == entity.MatchCatStatusRejected || matchCat.DeletedAt.Valid {
+		return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED, Error: errors.New(constant.FAILED_MATCH_ID_INVALID)}
+	}
+
+	if matchCat.TargetUserID != req.UserID {
+		return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED, Error: errors.New(constant.FAILED_CAT_USER_UNAUTHORIZED)}
+	}
+
+	matchCat.Status = entity.MatchCatStatusRejected
+	matchCat.UpdatedAt = now
+
+	err = u.repository.UpdateMatchCat(ctx, matchCat)
+	if err != nil {
+		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
+	}
+
+	return models.StandardResponseReq{Code: http.StatusOK, Message: constant.SUCCESS}
 }

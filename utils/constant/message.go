@@ -9,12 +9,12 @@ const (
 	SUCCESS_REGISTER_USER = "User registered successfully"
 
 	FAILED_GET_CATS              = "failed to get list of cats"
-	FAILED_WRONG_AGE_FORMAT      = "failed to get list of cats, invalid age input format"
+	FAILED_WRONG_AGE_FORMAT      = "invalid age input format"
 	FAILED_CAT_NOT_FOUND         = "failed to get cat, data not found"
-	FAILED_CAT_GENDER_IDENTIC    = "failed to match, gender of both cats are same"
-	FAILED_CAT_MATCHED           = "failed to match, some of cat already matched"
-	FAILED_CAT_USER_IDENCTIC     = "failed to match, user of both cats are same"
-	FAILED_CAT_USER_UNAUTHORIZED = "failed to match, you're not the owner of the cat"
+	FAILED_CAT_GENDER_IDENTIC    = "gender of both cats are same"
+	FAILED_CAT_MATCHED           = "some of cat already matched"
+	FAILED_CAT_USER_IDENCTIC     = "user of both cats are same"
+	FAILED_CAT_USER_UNAUTHORIZED = "you are not the owner of the cat"
 	FAILED_LOGIN                 = "failed to login, email or password is wrong"
 
 	EMAIL_REGISTERED = "email already registered"
@@ -24,4 +24,6 @@ const (
 
 	FAILED_GET_USER_CAT = "id is not found"
 	HAS_REQUESTED_MATCH = "your cat has match requests"
+
+	FAILED_MATCH_ID_INVALID = "match_id is no longer valid"
 )
