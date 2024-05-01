@@ -63,6 +63,7 @@ func ParseTokenJWT(tokenString string) (userClaims entity.UserClaimsResponse, er
 		return userClaims, fmt.Errorf("failed to parse expired_at value: %v", err)
 	}
 	userClaims = entity.UserClaimsResponse{
+		ID:        claims["id"].(int),
 		Name:      claims["name"].(string),
 		Email:     claims["email"].(string),
 		ExpiredAt: expiredAt,

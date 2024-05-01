@@ -8,6 +8,8 @@ import (
 
 type Handler interface {
 	GetListCat(c echo.Context) (err error)
+	CreateCat(c echo.Context) (err error)
+	UpdateCat(c echo.Context) (err error)
 	MatchCat(c echo.Context) (err error)
 
 	RegisterUser(c echo.Context) (err error)
