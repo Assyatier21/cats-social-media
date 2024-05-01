@@ -13,10 +13,11 @@ func (r *repository) InsertMatchCat(ctx context.Context, req entity.MatchCat) (e
         match_cat_id,
         user_cat_id,
         message,
+				status,
         created_at,
         updated_at
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *`
 
 	_, err = r.db.ExecContext(ctx,
@@ -26,6 +27,7 @@ func (r *repository) InsertMatchCat(ctx context.Context, req entity.MatchCat) (e
 		req.MatchCatID,
 		req.UserCatID,
 		req.Message,
+		entity.MatchCatStatusPending,
 		req.CreatedAt,
 		req.UpdatedAt,
 	)
