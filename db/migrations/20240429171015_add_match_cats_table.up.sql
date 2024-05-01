@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS match_cats (
     match_cat_id INT,
     user_cat_id INT,
     message VARCHAR(120),
-    status VARCHAR(20) DEFAULT 'PENDING',
+    status VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP

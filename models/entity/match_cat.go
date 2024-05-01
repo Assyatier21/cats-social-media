@@ -8,9 +8,9 @@ import (
 type MatchCatStatus string
 
 const (
-	MatchCatStatusApproved MatchCatStatus = "APPROVED"
-	MatchCatStatusPending  MatchCatStatus = "PENDING"
-	MatchCatStatusRejected MatchCatStatus = "REJECTED"
+	MatchCatStatusApproved MatchCatStatus = "approved"
+	MatchCatStatusPending  MatchCatStatus = "pending"
+	MatchCatStatusRejected MatchCatStatus = "rejected"
 )
 
 type MatchCat struct {

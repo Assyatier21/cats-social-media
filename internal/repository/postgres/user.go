@@ -3,7 +3,6 @@ package postgres
 import (
 	"context"
 	"database/sql"
-	"fmt"
 
 	"github.com/backend-magang/cats-social-media/models/entity"
 )
@@ -22,8 +21,6 @@ func (r *repository) InsertUser(ctx context.Context, req entity.User) (result en
 		req.CreatedAt,
 		req.UpdatedAt,
 	).StructScan(&result)
-
-	fmt.Print(result.ID)
 
 	if err != nil {
 		r.logger.Errorf("[Repository][User][InsertUser] failed to insert new user, err: %s", err.Error())
