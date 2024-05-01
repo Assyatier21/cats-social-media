@@ -3,7 +3,6 @@ package usecase
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -56,7 +55,6 @@ func (u *usecase) CreateCat(ctx context.Context, req entity.CreateCatRequest) mo
 }
 
 func (u *usecase) UpdateCat(ctx context.Context, req entity.UpdateCatRequest) models.StandardResponseReq {
-	fmt.Println("Cat ID:", cast.ToInt(req.ID))
 	var (
 		now    = time.Now()
 		userId = req.UserID
