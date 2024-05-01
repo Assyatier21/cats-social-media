@@ -19,6 +19,7 @@ func (u *usecase) RegisterUser(ctx context.Context, req entity.CreateUserRequest
 	var (
 		newUser = entity.User{}
 		now     = time.Now()
+		usr     = entity.User{}
 	)
 
 	// Check If Phone Already Registered
@@ -39,14 +40,18 @@ func (u *usecase) RegisterUser(ctx context.Context, req entity.CreateUserRequest
 		UpdatedAt: now,
 	}
 
-	err = u.repository.InsertUser(ctx, newUser)
+	usr, err = u.repository.InsertUser(ctx, newUser)
 	if err != nil {
 		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
 	}
 
-	token, _ := middleware.GenerateToken(newUser)
+	token, _ := middleware.GenerateToken(entity.User{
+		ID:    usr.ID,
+		Email: usr.Email,
+		Name:  usr.Name,
+	})
 	userJWT := entity.UserJWT{
-		ID:    newUser.ID,
+		ID:    usr.ID,
 		Email: newUser.Email,
 		Name:  newUser.Name,
 		Token: token,

@@ -3,24 +3,27 @@ package postgres
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"github.com/backend-magang/cats-social-media/models/entity"
 )
 
-func (r *repository) InsertUser(ctx context.Context, req entity.User) (err error) {
+func (r *repository) InsertUser(ctx context.Context, req entity.User) (result entity.User, err error) {
 
 	query := `INSERT INTO users (email, name, password, created_at, updated_at)
         VALUES ($1, $2, $3, $4, $5)
         RETURNING *`
 
-	_, err = r.db.ExecContext(ctx,
+	err = r.db.QueryRowxContext(ctx,
 		query,
 		req.Email,
 		req.Name,
 		req.Password,
 		req.CreatedAt,
 		req.UpdatedAt,
-	)
+	).StructScan(&result)
+
+	fmt.Print(result.ID)
 
 	if err != nil {
 		r.logger.Errorf("[Repository][User][InsertUser] failed to insert new user, err: %s", err.Error())
