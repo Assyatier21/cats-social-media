@@ -46,7 +46,6 @@ func (u *usecase) RegisterUser(ctx context.Context, req entity.CreateUserRequest
 
 	token, _ := middleware.GenerateToken(newUser)
 	userJWT := entity.UserJWT{
-		ID:    newUser.ID,
 		Email: newUser.Email,
 		Name:  newUser.Name,
 		Token: token,
@@ -78,7 +77,6 @@ func (u *usecase) LoginUser(ctx context.Context, req entity.LoginUserRequest) mo
 
 	token, _ = middleware.GenerateToken(user)
 	userJWT = entity.UserJWT{
-		ID:    user.ID,
 		Email: user.Email,
 		Name:  user.Name,
 		Token: token,
