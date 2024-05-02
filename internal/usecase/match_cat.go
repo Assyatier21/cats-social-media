@@ -67,14 +67,14 @@ func (u *usecase) GetListMatchCat(ctx context.Context, req entity.GetListMatchCa
 	var resp []entity.GetListMatchCatResponse
 	for _, match_cat := range list_match_cat {
 		data := entity.GetListMatchCatResponse{
-			ID: int64(match_cat.ID),
+			ID: match_cat.ID,
 			IssuedBy: entity.IssuedByData{
 				Name:      match_cat.IssuedByName,
 				Email:     match_cat.IssuedByEmail,
 				CreatedAt: match_cat.CreatedAt,
 			},
 			MatchCatDetail: entity.MatchCatDetail{
-				ID:          int64(match_cat.MatchCatID),
+				ID:          match_cat.MatchCatID,
 				Name:        match_cat.MatchCatName,
 				Race:        match_cat.MatchCatRace,
 				Sex:         match_cat.MatchCatSex,
@@ -85,7 +85,7 @@ func (u *usecase) GetListMatchCat(ctx context.Context, req entity.GetListMatchCa
 				CreatedAt:   match_cat.MatchCatCreatedAt,
 			},
 			UserCatDetail: entity.UserCatDetail{
-				ID:          int64(match_cat.UserCatID),
+				ID:          match_cat.UserCatID,
 				Name:        match_cat.UserCatName,
 				Race:        match_cat.UserCatRace,
 				Sex:         match_cat.UserCatSex,

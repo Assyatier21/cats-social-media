@@ -57,7 +57,7 @@ type GetListMatchCatRequest struct {
 }
 
 type GetListMatchCatResponse struct {
-	ID             int64          `json:"id"`
+	ID             int            `json:"id"`
 	IssuedBy       IssuedByData   `json:"issuedBy"`
 	MatchCatDetail MatchCatDetail `json:"matchCatDetail"`
 	UserCatDetail  UserCatDetail  `json:"userCatDetail"`
@@ -72,7 +72,7 @@ type IssuedByData struct {
 }
 
 type MatchCatDetail struct {
-	ID          int64     `json:"id"`
+	ID          int       `json:"id"`
 	Name        string    `json:"name"`
 	Race        string    `json:"race"`
 	Sex         string    `json:"sex"`
@@ -84,7 +84,7 @@ type MatchCatDetail struct {
 }
 
 type UserCatDetail struct {
-	ID          int64     `json:"id"`
+	ID          int       `json:"id"`
 	Name        string    `json:"name"`
 	Race        string    `json:"race"`
 	Sex         string    `json:"sex"`
