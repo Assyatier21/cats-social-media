@@ -16,6 +16,7 @@ const (
 	FAILED_CAT_MATCHED           = "some of cat already matched"
 	FAILED_CAT_USER_IDENCTIC     = "user of both cats are same"
 	FAILED_CAT_USER_UNAUTHORIZED = "you are not the owner of the cat"
+	FAILED_GET_MATCH_CATS        = "failed to get list of match cats"
 	FAILED_LOGIN                 = "failed to login, email or password is wrong"
 
 	EMAIL_REGISTERED = "email already registered"
@@ -27,9 +28,9 @@ const (
 	HAS_REQUESTED_MATCH = "your cat has match requests"
 
 	FAILED_MATCH_ID_INVALID = "match_id is no longer valid"
-	FAILED_GET_MATCH_ID    = "matchId is not found"
-	FAILED_MATCH_NOT_VALID = "matchId is no longer valid"
-	FAILED_CAN_NOT_APPROVE = "you can not appove this match"
+	FAILED_GET_MATCH_ID     = "matchId is not found"
+	FAILED_MATCH_NOT_VALID  = "matchId is no longer valid"
+	FAILED_CAN_NOT_APPROVE  = "you can not appove this match"
 
 	SUCCESS_APPROVE_MATCH = "successfully matches the cat match request"
 )

@@ -48,6 +48,21 @@ func (h *handler) RejectMatchCat(c echo.Context) (err error) {
 	return helper.WriteResponse(c, resp)
 }
 
+func (h *handler) GetListMatchCat(c echo.Context) (err error) {
+	ctx, cancel := helper.GetContext()
+	defer cancel()
+
+	user := middleware.ClaimToken(c)
+
+	
+	request := entity.GetListMatchCatRequest{
+		UserID: user.ID,
+	}
+
+	resp := h.usecase.GetListMatchCat(ctx, request)
+	return helper.WriteResponse(c, resp)
+}
+
 func (h *handler) MatchApprove(c echo.Context) (err error) {
 	ctx, cancel := helper.GetContext()
 	defer cancel()

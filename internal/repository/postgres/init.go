@@ -23,6 +23,7 @@ type RepositoryHandler interface {
 	FindMatchByID(ctx context.Context, id int) (entity.MatchCat, error)
 	InsertMatchCat(ctx context.Context, req entity.MatchCat) (err error)
 	UpdateMatchCat(ctx context.Context, req entity.MatchCat) (err error)
+	GetListMatchCat(ctx context.Context, req entity.GetListMatchCatRequest) (result []entity.GetListMatchCatQueryResponse, err error)
 	FindMatchCatByID(ctx context.Context, id int) (result entity.MatchCat, err error)
 	ApproveMatch(ctx context.Context, matchCatId int) (err error)
 	UpdateCatsMatch(ctx context.Context, matchCat entity.MatchCat) (err error)
