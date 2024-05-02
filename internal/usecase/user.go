@@ -45,13 +45,10 @@ func (u *usecase) RegisterUser(ctx context.Context, req entity.CreateUserRequest
 		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
 	}
 
-	token, _ := middleware.GenerateToken(entity.User{
-		ID:    usr.ID,
-		Email: usr.Email,
-		Name:  usr.Name,
-	})
+	newUser.ID = usr.ID
+	token, _ := middleware.GenerateToken(newUser)
+
 	userJWT := entity.UserJWT{
-		ID:    usr.ID,
 		Email: newUser.Email,
 		Name:  newUser.Name,
 		Token: token,
@@ -83,7 +80,6 @@ func (u *usecase) LoginUser(ctx context.Context, req entity.LoginUserRequest) mo
 
 	token, _ = middleware.GenerateToken(user)
 	userJWT = entity.UserJWT{
-		ID:    user.ID,
 		Email: user.Email,
 		Name:  user.Name,
 		Token: token,

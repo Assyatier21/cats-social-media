@@ -20,7 +20,6 @@ func SetupValidator() *validator.Validate {
 	v := validator.New()
 
 	v.RegisterValidation("validateRaces", customRaceEnum)
-	v.RegisterValidation("validateAgeInMonth", customValidateAge)
 
 	return v
 }
@@ -60,11 +59,4 @@ func customRaceEnum(fl validator.FieldLevel) bool {
 		}
 	}
 	return false
-}
-
-func customValidateAge(fl validator.FieldLevel) bool {
-	value := fl.Field().String()
-
-	parts := strings.Split(value, "=")
-	return len(parts) == 2
 }

@@ -13,8 +13,8 @@ import (
 )
 
 func (u *usecase) GetListCat(ctx context.Context, req entity.GetListCatRequest) models.StandardResponseReq {
-	if req.Age != "" {
-		builFilterAgeRequest(&req)
+	if err := builFilterAgeRequest(&req); err != nil {
+		return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED, Error: err}
 	}
 
 	cats, err := u.repository.GetListCat(ctx, req)

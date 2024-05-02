@@ -41,6 +41,7 @@ func (u *usecase) validateMatchCat(ctx context.Context, targetUserID int, matchC
 
 	return nil
 }
+
 func builFilterAgeRequest(req *entity.GetListCatRequest) (err error) {
 	if req.Age == "" {
 		return

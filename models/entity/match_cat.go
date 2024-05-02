@@ -52,6 +52,15 @@ type MatchCatRequest struct {
 	Message    string `json:"message" validate:"required,min=5,max=120"`
 }
 
+type UpdateMatchCatRequest struct {
+	UserID     int
+	MatchCatID int `json:"matchId" validate:"required"`
+}
+
+type DeleteMatchCatRequest struct {
+	UserID  int
+	MatchID int `params:"id" validate:"required"`
+}
 type GetListMatchCatRequest struct {
 	UserID int
 }
