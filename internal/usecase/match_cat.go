@@ -71,7 +71,7 @@ func (u *usecase) RejectMatchCat(ctx context.Context, req entity.UpdateMatchCatR
 	matchCat, err := u.repository.FindMatchByID(ctx, req.MatchCatID)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_CAT_NOT_FOUND, Error: err}
+			return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_MATCH_CAT_NOT_FOUND, Error: err}
 		}
 		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
 	}
@@ -85,6 +85,38 @@ func (u *usecase) RejectMatchCat(ctx context.Context, req entity.UpdateMatchCatR
 	}
 
 	matchCat.Status = entity.MatchCatStatusRejected
+	matchCat.UpdatedAt = now
+
+	err = u.repository.UpdateMatchCat(ctx, matchCat)
+	if err != nil {
+		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
+	}
+
+	return models.StandardResponseReq{Code: http.StatusOK, Message: constant.SUCCESS}
+}
+
+func (u *usecase) DeleteMatchCat(ctx context.Context, req entity.DeleteMatchCatRequest) models.StandardResponseReq {
+	var (
+		now = time.Now()
+	)
+
+	matchCat, err := u.repository.FindMatchByID(ctx, req.MatchID)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_CAT_NOT_FOUND, Error: err}
+		}
+		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
+	}
+
+	if matchCat.Status == entity.MatchCatStatusApproved || matchCat.Status == entity.MatchCatStatusRejected || matchCat.DeletedAt.Valid {
+		return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED, Error: errors.New(constant.FAILED_MATCH_ID_INVALID)}
+	}
+
+	if matchCat.IssuedByID != req.UserID {
+		return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED, Error: errors.New(constant.FAILED_CAT_USER_UNAUTHORIZED)}
+	}
+
+	matchCat.DeletedAt = sql.NullTime{Time: now, Valid: true}
 	matchCat.UpdatedAt = now
 
 	err = u.repository.UpdateMatchCat(ctx, matchCat)

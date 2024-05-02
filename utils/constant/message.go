@@ -11,6 +11,7 @@ const (
 	FAILED_GET_CATS              = "failed to get list of cats"
 	FAILED_WRONG_AGE_FORMAT      = "invalid age input format"
 	FAILED_CAT_NOT_FOUND         = "failed to get cat, data not found"
+	FAILED_MATCH_CAT_NOT_FOUND   = "failed to get match cat, data not found"
 	FAILED_CAT_GENDER_IDENTIC    = "gender of both cats are same"
 	FAILED_CAT_MATCHED           = "some of cat already matched"
 	FAILED_CAT_USER_IDENCTIC     = "user of both cats are same"

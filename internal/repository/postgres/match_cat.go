@@ -63,8 +63,9 @@ func (r *repository) UpdateMatchCat(ctx context.Context, req entity.MatchCat) (e
 		user_cat_id = $4,
 		message = $5,
 		status = $6,
-		updated_at = $7
-	WHERE id = $8
+		updated_at = $7,
+		deleted_at = $8
+	WHERE id = $9
 	RETURNING *`
 
 	_, err = r.db.ExecContext(ctx,
@@ -76,6 +77,7 @@ func (r *repository) UpdateMatchCat(ctx context.Context, req entity.MatchCat) (e
 		req.Message,
 		req.Status,
 		req.UpdatedAt,
+		req.DeletedAt,
 		req.ID,
 	)
 

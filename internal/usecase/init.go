@@ -17,6 +17,7 @@ type UsecaseHandler interface {
 
 	MatchCat(ctx context.Context, req entity.MatchCatRequest) models.StandardResponseReq
 	RejectMatchCat(ctx context.Context, req entity.UpdateMatchCatRequest) models.StandardResponseReq
+	DeleteMatchCat(ctx context.Context, req entity.DeleteMatchCatRequest) models.StandardResponseReq
 
 	RegisterUser(ctx context.Context, req entity.CreateUserRequest) models.StandardResponseReq
 	LoginUser(ctx context.Context, req entity.LoginUserRequest) models.StandardResponseReq

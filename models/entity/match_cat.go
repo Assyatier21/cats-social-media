@@ -37,3 +37,8 @@ type UpdateMatchCatRequest struct {
 	UserID     int
 	MatchCatID int `json:"matchId" validate:"required"`
 }
+
+type DeleteMatchCatRequest struct {
+	UserID  int
+	MatchID int `params:"id" validate:"required"`
+}
