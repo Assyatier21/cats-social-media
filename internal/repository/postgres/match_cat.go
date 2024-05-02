@@ -126,8 +126,9 @@ func (r *repository) GetListMatchCat(ctx context.Context, req entity.GetListMatc
 			cats AS user_cat ON match_cats.user_cat_id = user_cat.id
 		JOIN
 			users AS issued_by ON match_cats.issued_by_id = issued_by.id
-		WHERE
-    	match_cats.issued_by_id = $1 OR match_cats.target_user_id = $1
+		WHERE (match_cats.issued_by_id = $1 OR match_cats.target_user_id = $1)
+			AND match_cats.status = 'pending'
+			AND match_cats.deleted_at IS NULL
 		ORDER BY
 			match_cats.created_at DESC; -- ordered by newest first
 	`
