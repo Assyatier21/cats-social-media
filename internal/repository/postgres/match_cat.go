@@ -3,7 +3,6 @@ package postgres
 import (
 	"context"
 	"database/sql"
-	"log"
 	"time"
 
 	"github.com/backend-magang/cats-social-media/models/entity"
@@ -87,7 +86,7 @@ func (r *repository) GetListMatchCat(ctx context.Context, req entity.GetListMatc
 
 	err = r.db.SelectContext(ctx, &result, query, req.UserID)
 	if err != nil && err != sql.ErrNoRows {
-		log.Println("[Repository][MatchCat][GetListMatchCat] failed to get list match cat, err: ", err.Error())
+		r.logger.Errorf("[Repository][MatchCat][GetListMatchCat] failed to get list match cat, err: %s", err.Error())
 		return
 	}
 

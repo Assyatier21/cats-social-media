@@ -3,7 +3,6 @@ package postgres
 import (
 	"context"
 	"database/sql"
-	"log"
 
 	"github.com/backend-magang/cats-social-media/models/entity"
 )
@@ -56,7 +55,7 @@ func (r *repository) InsertCat(ctx context.Context, req entity.Cat) (result enti
 	).StructScan(&result)
 
 	if err != nil {
-		log.Println("[Repository][Cat][InsertCat] failed to insert new cat, err: ", err.Error())
+		r.logger.Errorf("[Repository][Cat][InsertCat] failed to insert new cat, err: %s", err.Error())
 		return
 	}
 
@@ -82,7 +81,7 @@ func (r *repository) UpdateCat(ctx context.Context, req entity.Cat) (result enti
 	).StructScan(&result)
 
 	if err != nil {
-		log.Println("[Repository][Cat][UpdateCat] failed to update cat, err: ", err.Error())
+		r.logger.Errorf("[Repository][Cat][UpdateCat] failed to update cat, err: %s", err.Error())
 		return
 	}
 
@@ -97,7 +96,7 @@ func (r *repository) FindUserCatByID(ctx context.Context, userId int, catId int)
 
 	err = r.db.QueryRowxContext(ctx, query, userId, catId).StructScan(&result)
 	if err != nil && err != sql.ErrNoRows {
-		log.Println("[Repository][Cat][FindUserCatByID] failed to find user cat, err: ", err.Error())
+		r.logger.Errorf("[Repository][Cat][FindUserCatByID] failed to find user cat, err: %s", err.Error())
 		return
 	}
 
@@ -112,7 +111,7 @@ func (r *repository) FindRequestedMatch(ctx context.Context, catId int) (result 
 
 	err = r.db.SelectContext(ctx, &result, query, catId)
 	if err != nil && err != sql.ErrNoRows {
-		log.Println("[Repository][Cat][FindRequestedMatch] failed to find requested match, err: ", err.Error())
+		r.logger.Errorf("[Repository][Cat][FindRequestedMatch] failed to find requested match, err: %s", err.Error())
 		return
 	}
 
