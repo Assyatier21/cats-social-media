@@ -10,7 +10,10 @@ type Handler interface {
 	GetListCat(c echo.Context) (err error)
 	CreateCat(c echo.Context) (err error)
 	UpdateCat(c echo.Context) (err error)
+
 	MatchCat(c echo.Context) (err error)
+	RejectMatchCat(c echo.Context) (err error)
+	DeleteMatchCat(c echo.Context) (err error)
 
 	RegisterUser(c echo.Context) (err error)
 	LoginUser(c echo.Context) (err error)
