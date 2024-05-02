@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 
+	"github.com/backend-magang/cats-social-media/config"
 	"github.com/backend-magang/cats-social-media/models/entity"
 	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
@@ -20,15 +21,21 @@ type RepositoryHandler interface {
 
 	FindRequestedMatch(ctx context.Context, catId int) (result []entity.MatchCat, err error)
 	InsertMatchCat(ctx context.Context, req entity.MatchCat) (err error)
+	FindMatchCatByID(ctx context.Context, id int) (result entity.MatchCat, err error)
+	ApproveMatch(ctx context.Context, matchCatId int) (err error)
+	UpdateCatsMatch(ctx context.Context, matchCat entity.MatchCat) (err error)
+	DeleteOtherMatch(ctx context.Context, catId int, matchCatId int) (err error)
 }
 
 type repository struct {
+	cfg    config.Config
 	db     *sqlx.DB
 	logger *logrus.Logger
 }
 
-func NewRepository(db *sqlx.DB, log *logrus.Logger) RepositoryHandler {
+func NewRepository(cfg config.Config, db *sqlx.DB, log *logrus.Logger) RepositoryHandler {
 	return &repository{
+		cfg:    cfg,
 		db:     db,
 		logger: log,
 	}

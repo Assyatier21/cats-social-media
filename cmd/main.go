@@ -10,6 +10,7 @@ import (
 	"github.com/backend-magang/cats-social-media/internal/usecase"
 	"github.com/backend-magang/cats-social-media/middleware"
 	"github.com/backend-magang/cats-social-media/router"
+	"github.com/backend-magang/cats-social-media/utils/pkg"
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
 )
@@ -26,7 +27,11 @@ func main() {
 
 	dbClient := driver.InitPostgres(cfg)
 
-	postgresRepository := postgres.NewRepository(dbClient, logger)
+	// Set Transaction
+	sqlTrx := pkg.NewSqlWithTransactionService(dbClient)
+	cfg.SqlTrx = sqlTrx
+
+	postgresRepository := postgres.NewRepository(cfg, dbClient, logger)
 	usecase := usecase.NewUsecase(cfg, logger, postgresRepository)
 	handler := api.NewHandler(logger, usecase)
 

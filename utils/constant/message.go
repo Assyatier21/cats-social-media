@@ -23,4 +23,10 @@ const (
 
 	FAILED_GET_USER_CAT = "id is not found"
 	HAS_REQUESTED_MATCH = "your cat has match requests"
+
+	FAILED_GET_MATCH_ID    = "matchId is not found"
+	FAILED_MATCH_NOT_VALID = "matchId is no longer valid"
+	FAILED_CAN_NOT_APPROVE = "you can not appove this match"
+
+	SUCCESS_APPROVE_MATCH = "successfully matches the cat match request"
 )
