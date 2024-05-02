@@ -29,13 +29,13 @@ type (
 		Offset      string `params:"offset" validate:"omitempty,number"`
 		Race        string `params:"race" validate:"omitempty,validateRaces"`
 		Sex         string `params:"sex" validate:"omitempty,oneof=male female"`
-		Match       string `params:"isAlreadyMatched"`
-		Age         string `params:"ageInMonth" validate:"omitempty,validateAgeInMonth"`
+		Match       string `params:"isAlreadyMatched" validate:"omitempty,oneof=true false"`
+		Age         string `params:"ageInMonth" validate:"omitempty"`
 		AgeValue    string
 		AgeOperator string
-		Owned       string `params:"owned"`
+		Owned       string `params:"owned" validate:"omitempty,oneof=true false"`
 		Search      string `params:"search"`
-		UserID      string
+		UserID      int
 	}
 
 	CreateCatRequest struct {

@@ -34,11 +34,10 @@ func buildQueryGetListCats(req entity.GetListCatRequest) (string, []interface{})
 	}
 
 	if req.Age != "" {
-
 		switch req.AgeOperator {
-		case ">":
+		case "=>":
 			queryBuilder.WriteString(" AND age >= ?")
-		case "<":
+		case "<=":
 			queryBuilder.WriteString(" AND age <= ?")
 		case "=":
 			queryBuilder.WriteString(" AND age = ?")
@@ -47,9 +46,13 @@ func buildQueryGetListCats(req entity.GetListCatRequest) (string, []interface{})
 		args = append(args, cast.ToInt(req.AgeValue))
 	}
 
-	if cast.ToBool(req.Owned) {
-		queryBuilder.WriteString(" AND user_id = ?")
-		args = append(args, cast.ToInt(req.UserID))
+	if req.Owned != "" {
+		if cast.ToBool(req.Owned) {
+			queryBuilder.WriteString(" AND user_id = ?")
+		} else {
+			queryBuilder.WriteString(" AND user_id != ?")
+		}
+		args = append(args, req.UserID)
 	}
 
 	if req.Search != "" {

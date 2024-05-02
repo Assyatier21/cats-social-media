@@ -3,12 +3,11 @@ package usecase
 import (
 	"context"
 	"errors"
-	"strconv"
 	"strings"
 
 	"github.com/backend-magang/cats-social-media/models/entity"
 	"github.com/backend-magang/cats-social-media/utils/constant"
-	"github.com/spf13/cast"
+	"github.com/backend-magang/cats-social-media/utils/helper"
 )
 
 func (u *usecase) validateCatsWillBeMatched(ctx context.Context, issuerID int, targetCat, userCat entity.Cat) (err error) {
@@ -43,20 +42,37 @@ func (u *usecase) validateMatchCat(ctx context.Context, targetUserID int, matchC
 	return nil
 }
 
-func builFilterAgeRequest(req *entity.GetListCatRequest) {
-	operatorAge, valueAge := parseFilterAge(req.Age)
-	req.AgeOperator = operatorAge
-	req.AgeValue = cast.ToString(valueAge)
-}
 
-func parseFilterAge(filter string) (operator string, value int) {
-	parts := strings.Split(filter, "=")
-	if len(parts) != 2 {
+func builFilterAgeRequest(req *entity.GetListCatRequest) (err error) {
+	if req.Age == "" {
 		return
 	}
 
-	operator = string(parts[0][len(parts[0])-1])
-	value, _ = strconv.Atoi(parts[1])
+	operatorAge, valueAge, err := parseFilterAge(req.Age)
+	if err != nil {
+		return
+	}
 
-	return operator, value
+	req.AgeOperator = operatorAge
+	req.AgeValue = valueAge
+
+	return
+}
+
+func parseFilterAge(age string) (operator string, value string, err error) {
+	operators := []string{"=>", "<=", "="}
+
+	for _, op := range operators {
+		if strings.HasPrefix(age, op) {
+			operator = op
+			value = strings.TrimPrefix(age, op)
+			break
+		}
+	}
+
+	if operator == "" || !helper.IsNumeric(value) {
+		return operator, value, errors.New(constant.FAILED_WRONG_AGE_FORMAT)
+	}
+
+	return
 }

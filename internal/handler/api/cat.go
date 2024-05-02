@@ -16,6 +16,8 @@ func (h *handler) GetListCat(c echo.Context) (err error) {
 	ctx, cancel := helper.GetContext()
 	defer cancel()
 
+	user := middleware.ClaimToken(c)
+
 	request := entity.GetListCatRequest{
 		ID:     c.QueryParam("id"),
 		Limit:  c.QueryParam("limit"),
@@ -26,6 +28,7 @@ func (h *handler) GetListCat(c echo.Context) (err error) {
 		Age:    c.QueryParam("ageInMonth"),
 		Owned:  c.QueryParam("owned"),
 		Search: c.QueryParam("search"),
+		UserID: user.ID,
 	}
 
 	if cast.ToInt(request.Limit) == 0 {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/backend-magang/cats-social-media/models"
@@ -88,4 +89,9 @@ func BuildOrderByQuery(order_by string) bool {
 	}
 
 	return order_by_bool
+}
+
+func IsNumeric(str string) bool {
+	_, err := strconv.Atoi(str)
+	return err == nil
 }
