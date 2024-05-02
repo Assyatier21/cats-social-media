@@ -27,7 +27,7 @@ type (
 		ID          string `params:"id"`
 		Limit       string `params:"limit" validate:"omitempty,number"`
 		Offset      string `params:"offset" validate:"omitempty,number"`
-		Race        string `params:"race" validate:"omitempty,validateRaces"`
+		Race        string `params:"race"`
 		Sex         string `params:"sex" validate:"omitempty,oneof=male female"`
 		Match       string `params:"isAlreadyMatched" validate:"omitempty,oneof=true false"`
 		Age         string `params:"ageInMonth" validate:"omitempty"`
