@@ -9,6 +9,7 @@ const (
 	SUCCESS_REGISTER_USER = "User registered successfully"
 
 	FAILED_GET_CATS              = "failed to get list of cats"
+	FAILED_GET_MATCH_CATS        = "failed to get list of match cats"
 	FAILED_CAT_NOT_FOUND         = "failed to get list of cats"
 	FAILED_CAT_GENDER_IDENTIC    = "failed to match, gender of both cats are same"
 	FAILED_CAT_MATCHED           = "failed to match, some of cat already matched"

@@ -20,7 +20,7 @@ type RepositoryHandler interface {
 
 	FindRequestedMatch(ctx context.Context, catId int) (result []entity.MatchCat, err error)
 	InsertMatchCat(ctx context.Context, req entity.MatchCat) (err error)
-	GetListMatchCat(ctx context.Context) (result []entity.MatchCat, err error)
+	GetListMatchCat(ctx context.Context, req entity.GetListMatchCatRequest) (result []entity.GetListMatchCatQueryResponse, err error)
 }
 
 type repository struct {
