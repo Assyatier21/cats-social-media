@@ -31,7 +31,7 @@ func main() {
 	sqlTrx := pkg.NewSqlWithTransactionService(dbClient)
 	cfg.SqlTrx = sqlTrx
 
-	postgresRepository := postgres.NewRepository(dbClient, logger)
+	postgresRepository := postgres.NewRepository(cfg, dbClient, logger)
 	usecase := usecase.NewUsecase(cfg, logger, postgresRepository)
 	handler := api.NewHandler(logger, usecase)
 

@@ -48,6 +48,24 @@ func (h *handler) RejectMatchCat(c echo.Context) (err error) {
 	return helper.WriteResponse(c, resp)
 }
 
+func (h *handler) MatchApprove(c echo.Context) (err error) {
+	ctx, cancel := helper.GetContext()
+	defer cancel()
+
+	user := middleware.ClaimToken(c)
+
+	request := entity.MatchApproveRequest{
+		UserID: user.ID,
+	}
+	err = pkg.BindValidate(c, &request)
+	if err != nil {
+		return helper.WriteResponse(c, models.StandardResponseReq{Code: http.StatusBadRequest, Error: err})
+	}
+
+	resp := h.usecase.MatchApprove(ctx, request)
+	return helper.WriteResponse(c, resp)
+}
+
 func (h *handler) DeleteMatchCat(c echo.Context) (err error) {
 	ctx, cancel := helper.GetContext()
 	defer cancel()
