@@ -123,3 +123,7 @@ type GetListMatchCatQueryResponse struct {
 	UserCatHasMatched  bool           `db:"user_cat_hasmatched" json:"user_cat_hasmatched"`
 	UserCatCreatedAt   time.Time      `db:"user_cat_createdat" json:"user_cat_createdat"`
 }
+type MatchApproveRequest struct {
+	UserID  int
+	MatchID int `json:"matchId" validate:"required"`
+}

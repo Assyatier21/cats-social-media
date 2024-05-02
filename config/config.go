@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 
+	"github.com/backend-magang/cats-social-media/utils/pkg"
 	"github.com/spf13/viper"
 )
 
@@ -18,6 +19,7 @@ type Config struct {
 	DBSchema   string `mapstructure:"DB_SCHEMA"`
 	JWTSecret  string `mapstructure:"JWT_SECRET"`
 	BCryptSalt string `mapstructure:"BCRYPT_SALT"`
+	SqlTrx     *pkg.SqlWithTransactionService
 }
 
 func Load() (conf Config) {

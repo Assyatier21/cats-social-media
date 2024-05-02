@@ -15,8 +15,5 @@ func InitCatRouter(e *echo.Echo, handler api.Handler) {
 	cat.PUT("/:id", handler.UpdateCat)
 	cat.POST("/match", handler.MatchCat)
 	cat.GET("/match", handler.GetListMatchCat)
-	// article.GET("/:id", handler.GetArticleDetails)
-	// article.POST("", handler.InsertArticle)
-	// article.PATCH("/:id", handler.UpdateArticle)
-	// article.DELETE("/:id", handler.DeleteArticle)
+	cat.POST("/match/approve", handler.MatchApprove)
 }

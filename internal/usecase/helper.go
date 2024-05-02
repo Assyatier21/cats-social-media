@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cast"
 )
 
-func (u *usecase) validateMatchCat(ctx context.Context, issuerID int, targetCat, userCat entity.Cat) (err error) {
+func (u *usecase) validateCatsWillBeMatched(ctx context.Context, issuerID int, targetCat, userCat entity.Cat) (err error) {
 	if issuerID != userCat.UserID {
 		return errors.New(constant.FAILED_CAT_USER_UNAUTHORIZED)
 	}
@@ -26,6 +26,18 @@ func (u *usecase) validateMatchCat(ctx context.Context, issuerID int, targetCat,
 
 	if targetCat.IsAlreadyMatched || userCat.IsAlreadyMatched {
 		return errors.New(constant.FAILED_CAT_MATCHED)
+	}
+
+	return nil
+}
+
+func (u *usecase) validateMatchCat(ctx context.Context, targetUserID int, matchCat entity.MatchCat) (err error) {
+	if matchCat.Status != entity.MatchCatStatusPending || matchCat.DeletedAt.Valid {
+		return errors.New(constant.FAILED_MATCH_NOT_VALID)
+	}
+
+	if matchCat.TargetUserID != targetUserID {
+		return errors.New(constant.FAILED_CAN_NOT_APPROVE)
 	}
 
 	return nil
