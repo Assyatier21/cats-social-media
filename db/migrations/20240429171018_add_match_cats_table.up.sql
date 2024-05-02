@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS match_cats (
+CREATE TABLE IF EXISTS match_cats (
     id SERIAL PRIMARY KEY,
     issued_by_id INT,
     target_user_id INT,
