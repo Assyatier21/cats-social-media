@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"net/http"
 	"time"
 
@@ -113,4 +114,33 @@ func (u *usecase) UpdateCat(ctx context.Context, req entity.UpdateCatRequest) mo
 	}
 
 	return models.StandardResponseReq{Code: http.StatusOK, Message: constant.SUCCESS_UPDATE_CAT, Data: resp}
+}
+
+func (u *usecase) DeleteCat(ctx context.Context, req entity.DeleteCatRequest) models.StandardResponseReq {
+	var (
+		now          = time.Now()
+		userId       = req.UserID
+		catId        = cast.ToInt(req.ID)
+		now_nullable = sql.NullTime{Time: time.Now(), Valid: true}
+	)
+
+	// Find cat by id
+	cat, err := u.repository.FindCatByID(ctx, catId)
+	if err == sql.ErrNoRows {
+		return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_CAT_NOT_FOUND, Error: err}
+	}
+	// If cat isn't belong to user
+	if cat.UserID != userId {
+		return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED, Error: errors.New(constant.FAILED_CAT_USER_UNAUTHORIZED)}
+	}
+
+	cat.UpdatedAt = now
+	cat.DeletedAt = now_nullable
+
+	_, err = u.repository.DeleteCat(ctx, cat)
+	if err != nil {
+		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
+	}
+
+	return models.StandardResponseReq{Code: http.StatusOK, Message: constant.SUCCESS_DELETE_CAT}
 }

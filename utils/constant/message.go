@@ -19,13 +19,14 @@ const (
 	FAILED_GET_MATCH_CATS        = "failed to get list of match cats"
 	FAILED_LOGIN                 = "failed to login, email or password is wrong"
 
-	EMAIL_REGISTERED = "email already registered"
+	EMAIL_REGISTERED = "This email is already registered. Please choose another one"
 
-	SUCCESS_ADD_CAT    = "successfully add cat"
-	SUCCESS_UPDATE_CAT = "successfully update cat"
+	SUCCESS_ADD_CAT    = "The cat record has been added successfully "
+	SUCCESS_UPDATE_CAT = "The cat record has been updated successfully"
+	SUCCESS_DELETE_CAT = "The cat record was deleted successfully"
 
-	FAILED_GET_USER_CAT = "id is not found"
-	HAS_REQUESTED_MATCH = "your cat has match requests"
+	FAILED_GET_USER_CAT = "UserID is not found"
+	HAS_REQUESTED_MATCH = "The corresponding cat is matched or already has match request(s)"
 
 	FAILED_MATCH_ID_INVALID = "match_id is no longer valid"
 	FAILED_GET_MATCH_ID     = "matchId is not found"

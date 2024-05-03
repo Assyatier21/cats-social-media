@@ -13,6 +13,8 @@ func InitCatRouter(e *echo.Echo, handler api.Handler) {
 	cat.GET("", handler.GetListCat)
 	cat.POST("", handler.CreateCat)
 	cat.PUT("/:id", handler.UpdateCat)
+	cat.DELETE("/:id", handler.DeleteCat)
+
 	cat.POST("/match", handler.MatchCat)
 	cat.DELETE("/match/:id", handler.DeleteMatchCat)
 	cat.POST("/match/reject", handler.RejectMatchCat)

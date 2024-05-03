@@ -15,6 +15,7 @@ type RepositoryHandler interface {
 	FindUserCatByID(ctx context.Context, userId int, catId int) (result entity.Cat, err error)
 	InsertCat(ctx context.Context, req entity.Cat) (result entity.Cat, err error)
 	UpdateCat(ctx context.Context, req entity.Cat) (result entity.Cat, err error)
+	DeleteCat(ctx context.Context, req entity.Cat) (result entity.Cat, err error)
 
 	FindUserByEmail(ctx context.Context, email string) (result entity.User, err error)
 	InsertUser(ctx context.Context, req entity.User) (result entity.User, err error)
