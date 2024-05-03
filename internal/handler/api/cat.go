@@ -79,3 +79,19 @@ func (h *handler) UpdateCat(c echo.Context) (err error) {
 	resp := h.usecase.UpdateCat(ctx, request)
 	return helper.WriteResponse(c, resp)
 }
+
+func (h *handler) DeleteCat(c echo.Context) (err error) {
+	ctx, cancel := helper.GetContext()
+	defer cancel()
+
+	userClaims := middleware.ClaimToken(c)
+
+	request := entity.DeleteCatRequest{UserID: userClaims.ID}
+	err = pkg.BindValidate(c, &request)
+	if err != nil {
+		return helper.WriteResponse(c, models.StandardResponseReq{Code: http.StatusBadRequest, Error: err})
+	}
+
+	resp := h.usecase.DeleteCat(ctx, request)
+	return helper.WriteResponse(c, resp)
+}

@@ -75,4 +75,16 @@ type (
 		CreatedAt   time.Time `json:"createdAt"`
 		UpdatedAt   time.Time `json:"updatedAt"`
 	}
+
+	DeleteCatRequest struct {
+		UserID int
+		ID     string `param:"id" validate:"required"`
+	}
+
+	DeleteCatResponse struct {
+		UserID    int
+		ID        int       `json:"id"`
+		UpdatedAt time.Time `json:"UpdatedAt"`
+		DeletedAt time.Time `json:"deletedAt"`
+	}
 )
