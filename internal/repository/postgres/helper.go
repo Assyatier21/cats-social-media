@@ -35,9 +35,9 @@ func buildQueryGetListCats(req entity.GetListCatRequest) (string, []interface{})
 
 	if req.Age != "" {
 		switch req.AgeOperator {
-		case "=>":
+		case ">":
 			queryBuilder.WriteString(" AND age > ?")
-		case "<=":
+		case "<":
 			queryBuilder.WriteString(" AND age < ?")
 		case "=":
 			queryBuilder.WriteString(" AND age = ?")

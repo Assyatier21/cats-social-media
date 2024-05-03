@@ -60,7 +60,7 @@ func builFilterAgeRequest(req *entity.GetListCatRequest) (err error) {
 }
 
 func parseFilterAge(age string) (operator string, value string, err error) {
-	operators := []string{"=>", "<=", "="}
+	operators := []string{">", "<", "="}
 
 	for _, op := range operators {
 		if strings.HasPrefix(age, op) {
