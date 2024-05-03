@@ -47,7 +47,7 @@ func (u *usecase) CreateCat(ctx context.Context, req entity.CreateCatRequest) mo
 	}
 
 	resp := entity.CreateCatResponse{
-		ID:        cat.ID,
+		ID:        cast.ToString(cat.ID),
 		CreatedAt: cat.CreatedAt,
 	}
 
@@ -101,7 +101,7 @@ func (u *usecase) UpdateCat(ctx context.Context, req entity.UpdateCatRequest) mo
 	}
 
 	resp := entity.UpdateCatResponse{
-		ID:          cat.ID,
+		ID:          cast.ToString(cat.ID),
 		Name:        cat.Name,
 		Race:        cat.Race,
 		Sex:         cat.Sex,

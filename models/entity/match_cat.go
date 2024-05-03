@@ -66,12 +66,12 @@ type GetListMatchCatRequest struct {
 }
 
 type GetListMatchCatResponse struct {
-	ID             int            `json:"id"`
-	IssuedBy       IssuedByData   `json:"issuedBy"`
-	MatchCatDetail MatchCatDetail `json:"matchCatDetail"`
-	UserCatDetail  UserCatDetail  `json:"userCatDetail"`
-	Message        string         `json:"message"`
-	CreatedAt      time.Time      `json:"createdAt"`
+	ID             string       `json:"id"`
+	IssuedBy       IssuedByData `json:"issuedBy"`
+	MatchCatDetail CatDetail    `json:"matchCatDetail"`
+	UserCatDetail  CatDetail    `json:"userCatDetail"`
+	Message        string       `json:"message"`
+	CreatedAt      time.Time    `json:"createdAt"`
 }
 
 type IssuedByData struct {
@@ -80,20 +80,8 @@ type IssuedByData struct {
 	CreatedAt time.Time `json:"createdAt"`
 }
 
-type MatchCatDetail struct {
-	ID          int       `json:"id"`
-	Name        string    `json:"name"`
-	Race        string    `json:"race"`
-	Sex         string    `json:"sex"`
-	Description string    `json:"description"`
-	AgeInMonth  int       `json:"ageInMonth"`
-	ImageUrls   []string  `json:"imageUrls"`
-	HasMatched  bool      `json:"hasMatched"`
-	CreatedAt   time.Time `json:"createdAt"`
-}
-
-type UserCatDetail struct {
-	ID          int       `json:"id"`
+type CatDetail struct {
+	ID          string    `json:"id"`
 	Name        string    `json:"name"`
 	Race        string    `json:"race"`
 	Sex         string    `json:"sex"`

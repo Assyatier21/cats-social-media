@@ -8,6 +8,7 @@ import (
 	"github.com/backend-magang/cats-social-media/models/entity"
 	"github.com/backend-magang/cats-social-media/utils/constant"
 	"github.com/backend-magang/cats-social-media/utils/helper"
+	"github.com/spf13/cast"
 )
 
 func (u *usecase) validateCatsWillBeMatched(ctx context.Context, issuerID int, targetCat, userCat entity.Cat) (err error) {
@@ -78,14 +79,14 @@ func parseFilterAge(age string) (operator string, value string, err error) {
 
 func buildResponseListMatchCat(match_cat entity.GetListMatchCatQueryResponse) entity.GetListMatchCatResponse {
 	return entity.GetListMatchCatResponse{
-		ID: match_cat.ID,
+		ID: cast.ToString(match_cat.ID),
 		IssuedBy: entity.IssuedByData{
 			Name:      match_cat.IssuedByName,
 			Email:     match_cat.IssuedByEmail,
 			CreatedAt: match_cat.CreatedAt,
 		},
-		MatchCatDetail: entity.MatchCatDetail{
-			ID:          match_cat.MatchCatID,
+		MatchCatDetail: entity.CatDetail{
+			ID:          cast.ToString(match_cat.MatchCatID),
 			Name:        match_cat.MatchCatName,
 			Race:        match_cat.MatchCatRace,
 			Sex:         match_cat.MatchCatSex,
@@ -95,8 +96,8 @@ func buildResponseListMatchCat(match_cat entity.GetListMatchCatQueryResponse) en
 			HasMatched:  match_cat.MatchCatHasMatched,
 			CreatedAt:   match_cat.MatchCatCreatedAt,
 		},
-		UserCatDetail: entity.UserCatDetail{
-			ID:          match_cat.UserCatID,
+		UserCatDetail: entity.CatDetail{
+			ID:          cast.ToString(match_cat.UserCatID),
 			Name:        match_cat.UserCatName,
 			Race:        match_cat.UserCatRace,
 			Sex:         match_cat.UserCatSex,

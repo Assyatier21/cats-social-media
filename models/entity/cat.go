@@ -49,7 +49,7 @@ type (
 	}
 
 	CreateCatResponse struct {
-		ID        int       `json:"id"`
+		ID        string    `json:"id"`
 		CreatedAt time.Time `json:"createdAt"`
 	}
 
@@ -65,7 +65,7 @@ type (
 	}
 
 	UpdateCatResponse struct {
-		ID          int       `json:"id"`
+		ID          string    `json:"id"`
 		Name        string    `json:"name"`
 		Race        string    `json:"race"`
 		Sex         string    `json:"sex"`
