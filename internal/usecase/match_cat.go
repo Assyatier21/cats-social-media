@@ -11,6 +11,7 @@ import (
 	"github.com/backend-magang/cats-social-media/models/entity"
 	"github.com/backend-magang/cats-social-media/utils/constant"
 	"github.com/backend-magang/cats-social-media/utils/pkg"
+	"github.com/spf13/cast"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -24,18 +25,18 @@ func (u *usecase) MatchCat(ctx context.Context, req entity.MatchCatRequest) mode
 	)
 
 	g.Go(func() (err1 error) {
-		targetCat, err1 = u.repository.FindCatByID(ctx, req.MatchCatID)
+		targetCat, err1 = u.repository.FindCatByID(ctx, cast.ToInt(req.MatchCatID))
 		return err1
 	})
 
 	g.Go(func() (err2 error) {
-		userCat, err2 = u.repository.FindCatByID(ctx, req.UserCatID)
+		userCat, err2 = u.repository.FindCatByID(ctx, cast.ToInt(req.UserCatID))
 		return err2
 	})
 
 	if err := g.Wait(); err != nil {
 		if err == sql.ErrNoRows {
-			return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_CAT_NOT_FOUND, Error: err}
+			return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED_CAT_NOT_FOUND, Error: err}
 		}
 		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
 	}

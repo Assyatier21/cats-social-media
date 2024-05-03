@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"github.com/backend-magang/cats-social-media/models/entity"
 )
@@ -12,6 +13,8 @@ func (r *repository) GetListCat(ctx context.Context, req entity.GetListCatReques
 
 	query, args := buildQueryGetListCats(req)
 	query = r.db.Rebind(query)
+
+	fmt.Println(query)
 
 	err := r.db.SelectContext(ctx, &result, query, args...)
 	if err != nil {
@@ -120,15 +123,14 @@ func (r *repository) FindRequestedMatch(ctx context.Context, catId int) (result 
 
 func (r *repository) DeleteCat(ctx context.Context, req entity.Cat) (result entity.Cat, err error) {
 	query := `UPDATE cats 
-		SET  updated_at = $1 AND deleted_at = $2
-		WHERE id = $3 AND user_id = $4 RETURNING *`
+		SET  updated_at = $1, deleted_at = $2
+		WHERE id = $3 RETURNING *`
 
 	err = r.db.QueryRowxContext(ctx,
 		query,
 		req.UpdatedAt,
 		req.DeletedAt,
 		req.ID,
-		req.UserID,
 	).StructScan(&result)
 
 	if err != nil {

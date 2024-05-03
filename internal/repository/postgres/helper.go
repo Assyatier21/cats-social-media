@@ -36,9 +36,9 @@ func buildQueryGetListCats(req entity.GetListCatRequest) (string, []interface{})
 	if req.Age != "" {
 		switch req.AgeOperator {
 		case "=>":
-			queryBuilder.WriteString(" AND age >= ?")
+			queryBuilder.WriteString(" AND age > ?")
 		case "<=":
-			queryBuilder.WriteString(" AND age <= ?")
+			queryBuilder.WriteString(" AND age < ?")
 		case "=":
 			queryBuilder.WriteString(" AND age = ?")
 		}
@@ -60,6 +60,7 @@ func buildQueryGetListCats(req entity.GetListCatRequest) (string, []interface{})
 		args = append(args, req.Search)
 	}
 
+	queryBuilder.WriteString(" AND deleted_at IS NULL")
 	queryBuilder.WriteString(" ORDER BY created_at DESC LIMIT ? OFFSET ?")
 	args = append(args, cast.ToInt(req.Limit), cast.ToInt(req.Offset))
 

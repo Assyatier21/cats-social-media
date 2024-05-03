@@ -111,3 +111,19 @@ func buildResponseListMatchCat(match_cat entity.GetListMatchCatQueryResponse) en
 		CreatedAt: match_cat.CreatedAt,
 	}
 }
+
+func buildResponseCat(cat entity.Cat) entity.GetListCatResponse {
+	return entity.GetListCatResponse{
+		ID:               cast.ToString(cat.ID),
+		UserID:           cat.UserID,
+		Name:             cat.Name,
+		Race:             cat.Race,
+		Sex:              cat.Sex,
+		Age:              cat.Age,
+		Description:      cat.Description,
+		Images:           cat.Images,
+		IsAlreadyMatched: cat.IsAlreadyMatched,
+		CreatedAt:        cat.CreatedAt,
+		UpdatedAt:        cat.UpdatedAt,
+	}
+}

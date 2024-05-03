@@ -21,7 +21,7 @@ const (
 
 	EMAIL_REGISTERED = "This email is already registered. Please choose another one"
 
-	SUCCESS_ADD_CAT    = "The cat record has been added successfully "
+	SUCCESS_ADD_CAT    = "The cat record has been added successfully"
 	SUCCESS_UPDATE_CAT = "The cat record has been updated successfully"
 	SUCCESS_DELETE_CAT = "The cat record was deleted successfully"
 

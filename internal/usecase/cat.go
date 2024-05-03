@@ -14,6 +14,10 @@ import (
 )
 
 func (u *usecase) GetListCat(ctx context.Context, req entity.GetListCatRequest) models.StandardResponseReq {
+	var (
+		listCats = []entity.GetListCatResponse{}
+	)
+
 	if err := builFilterAgeRequest(&req); err != nil {
 		return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED, Error: err}
 	}
@@ -23,7 +27,11 @@ func (u *usecase) GetListCat(ctx context.Context, req entity.GetListCatRequest) 
 		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED_GET_CATS, Error: err}
 	}
 
-	return models.StandardResponseReq{Code: http.StatusOK, Message: constant.SUCCESS, Data: cats}
+	for _, cat := range cats {
+		listCats = append(listCats, buildResponseCat(cat))
+	}
+
+	return models.StandardResponseReq{Code: http.StatusOK, Message: constant.SUCCESS, Data: listCats}
 }
 
 func (u *usecase) CreateCat(ctx context.Context, req entity.CreateCatRequest) models.StandardResponseReq {
@@ -118,24 +126,22 @@ func (u *usecase) UpdateCat(ctx context.Context, req entity.UpdateCatRequest) mo
 
 func (u *usecase) DeleteCat(ctx context.Context, req entity.DeleteCatRequest) models.StandardResponseReq {
 	var (
-		now          = time.Now()
-		userId       = req.UserID
-		catId        = cast.ToInt(req.ID)
-		now_nullable = sql.NullTime{Time: time.Now(), Valid: true}
+		now = time.Now()
 	)
 
 	// Find cat by id
-	cat, err := u.repository.FindCatByID(ctx, catId)
+	cat, err := u.repository.FindCatByID(ctx, cast.ToInt(req.ID))
 	if err == sql.ErrNoRows {
 		return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_CAT_NOT_FOUND, Error: err}
 	}
+
 	// If cat isn't belong to user
-	if cat.UserID != userId {
+	if req.UserID != cat.UserID {
 		return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED, Error: errors.New(constant.FAILED_CAT_USER_UNAUTHORIZED)}
 	}
 
 	cat.UpdatedAt = now
-	cat.DeletedAt = now_nullable
+	cat.DeletedAt = sql.NullTime{Time: now, Valid: true}
 
 	_, err = u.repository.DeleteCat(ctx, cat)
 	if err != nil {
