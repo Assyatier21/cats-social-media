@@ -29,6 +29,7 @@ type RepositoryHandler interface {
 	ApproveMatch(ctx context.Context, matchCatId int) (err error)
 	UpdateCatsMatch(ctx context.Context, matchCat entity.MatchCat) (err error)
 	DeleteOtherMatch(ctx context.Context, catId int, matchCatId int) (err error)
+	FindRequestedMatchCat(ctx context.Context, catId int, matchCatId int) (result []entity.MatchCat, err error)
 }
 
 type repository struct {

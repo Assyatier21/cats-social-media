@@ -255,3 +255,18 @@ func (r *repository) DeleteOtherMatch(ctx context.Context, catId int, matchCatId
 
 	return nil
 }
+
+func (r *repository) FindRequestedMatchCat(ctx context.Context, catId int, matchCatId int) (result []entity.MatchCat, err error) {
+	query := `SELECT * FROM match_cats 
+		WHERE (match_cat_id = $1 AND user_cat_id = $2) OR (match_cat_id = $2 AND user_cat_id = $1) 
+		AND deleted_at IS NULL
+		AND status = 'pending'`
+
+	err = r.db.SelectContext(ctx, &result, query, catId, matchCatId)
+	if err != nil && err != sql.ErrNoRows {
+		r.logger.Errorf("[Repository][MatchCat][FindRequestedMatchCat] failed to query, err: %s", err.Error())
+		return result, err
+	}
+
+	return result, nil
+}

@@ -17,6 +17,7 @@ const (
 	FAILED_CAT_USER_IDENCTIC     = "user of both cats are same"
 	FAILED_CAT_USER_UNAUTHORIZED = "you are not the owner of the cat"
 	FAILED_GET_MATCH_CATS        = "failed to get list of match cats"
+	FAILED_REQUEST_MATCH_CATS    = "failed to match cat, already have a pending request"
 	FAILED_LOGIN                 = "failed to login, email or password is wrong"
 
 	EMAIL_REGISTERED = "This email is already registered. Please choose another one"

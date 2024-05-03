@@ -21,6 +21,7 @@ func (u *usecase) MatchCat(ctx context.Context, req entity.MatchCatRequest) mode
 		now       = time.Now()
 		targetCat = entity.Cat{}
 		userCat   = entity.Cat{}
+		matchCats = []entity.MatchCat{}
 		match     = entity.MatchCat{}
 	)
 
@@ -34,9 +35,14 @@ func (u *usecase) MatchCat(ctx context.Context, req entity.MatchCatRequest) mode
 		return err2
 	})
 
+	g.Go(func() (err3 error) {
+		matchCats, err3 = u.repository.FindRequestedMatchCat(ctx, cast.ToInt(req.UserCatID), cast.ToInt(req.MatchCatID))
+		return err3
+	})
+
 	if err := g.Wait(); err != nil {
 		if err == sql.ErrNoRows {
-			return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED_CAT_NOT_FOUND, Error: err}
+			return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_CAT_NOT_FOUND, Error: err}
 		}
 		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
 	}
@@ -44,6 +50,10 @@ func (u *usecase) MatchCat(ctx context.Context, req entity.MatchCatRequest) mode
 	err := u.validateCatsWillBeMatched(ctx, req.UserID, targetCat, userCat)
 	if err != nil {
 		return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED, Error: err}
+	}
+
+	if len(matchCats) > 0 {
+		return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED, Error: errors.New(constant.FAILED_REQUEST_MATCH_CATS)}
 	}
 
 	match = entity.MatchCat{
