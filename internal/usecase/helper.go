@@ -12,10 +12,6 @@ import (
 )
 
 func (u *usecase) validateCatsWillBeMatched(ctx context.Context, issuerID int, targetCat, userCat entity.Cat) (err error) {
-	if issuerID != userCat.UserID {
-		return errors.New(constant.FAILED_CAT_USER_UNAUTHORIZED)
-	}
-
 	if targetCat.UserID == userCat.UserID {
 		return errors.New(constant.FAILED_CAT_USER_IDENCTIC)
 	}

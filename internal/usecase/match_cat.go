@@ -47,6 +47,10 @@ func (u *usecase) MatchCat(ctx context.Context, req entity.MatchCatRequest) mode
 		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Error: err}
 	}
 
+	if req.UserID != userCat.UserID {
+		return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED, Error: errors.New(constant.FAILED_CAT_USER_UNAUTHORIZED)}
+	}
+
 	err := u.validateCatsWillBeMatched(ctx, req.UserID, targetCat, userCat)
 	if err != nil {
 		return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED, Error: err}
