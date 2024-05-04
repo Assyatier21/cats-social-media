@@ -30,7 +30,7 @@ type (
 	}
 
 	UserJWT struct {
-		ID    int    `json:"id"`
+		ID    int    `json:"id,omitempty"`
 		Email string `json:"email"`
 		Name  string `json:"name"`
 		Token string `json:"accessToken"`

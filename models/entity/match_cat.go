@@ -54,7 +54,7 @@ type MatchCatRequest struct {
 
 type UpdateMatchCatRequest struct {
 	UserID     int
-	MatchCatID int `json:"matchId" validate:"required"`
+	MatchCatID string `json:"matchId" validate:"required"`
 }
 
 type DeleteMatchCatRequest struct {
@@ -122,5 +122,5 @@ type GetListMatchCatQueryResponse struct {
 }
 type MatchApproveRequest struct {
 	UserID  int
-	MatchID int `json:"matchId" validate:"required"`
+	MatchID string `json:"matchId" validate:"required"`
 }

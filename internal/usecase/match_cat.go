@@ -100,7 +100,7 @@ func (u *usecase) GetListMatchCat(ctx context.Context, req entity.GetListMatchCa
 }
 
 func (u *usecase) MatchApprove(ctx context.Context, req entity.MatchApproveRequest) models.StandardResponseReq {
-	matchCat, err := u.repository.FindMatchCatByID(ctx, req.MatchID)
+	matchCat, err := u.repository.FindMatchCatByID(ctx, cast.ToInt(req.MatchID))
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_GET_MATCH_ID, Error: err}
@@ -147,7 +147,7 @@ func (u *usecase) RejectMatchCat(ctx context.Context, req entity.UpdateMatchCatR
 		now = time.Now()
 	)
 
-	matchCat, err := u.repository.FindMatchByID(ctx, req.MatchCatID)
+	matchCat, err := u.repository.FindMatchByID(ctx, cast.ToInt(req.MatchCatID))
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_MATCH_CAT_NOT_FOUND, Error: err}
