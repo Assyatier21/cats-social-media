@@ -32,7 +32,7 @@ func (u *usecase) validateMatchCat(ctx context.Context, targetUserID int, matchC
 		return errors.New(constant.FAILED_MATCH_NOT_VALID)
 	}
 
-	if matchCat.TargetUserID != targetUserID {
+	if matchCat.IssuedByID != targetUserID {
 		return errors.New(constant.FAILED_CAN_NOT_APPROVE)
 	}
 
