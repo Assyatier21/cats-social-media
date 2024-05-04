@@ -159,13 +159,13 @@ func (r *repository) ApproveMatch(ctx context.Context, matchCatId int) (err erro
 		SET status = $1
 		WHERE id = $2 RETURNING *`
 
-	var result sql.Result
+	// var result sql.Result
 
 	tx, _ := pkg.ExtractTx(ctx)
 	if tx != nil {
-		result, err = tx.ExecContext(ctx, query, entity.MatchCatStatusApproved, matchCatId)
+		_, err = tx.ExecContext(ctx, query, entity.MatchCatStatusApproved, matchCatId)
 	} else {
-		result, err = r.db.ExecContext(ctx, query, entity.MatchCatStatusApproved, matchCatId)
+		_, err = r.db.ExecContext(ctx, query, entity.MatchCatStatusApproved, matchCatId)
 	}
 
 	if err != nil {
@@ -173,16 +173,16 @@ func (r *repository) ApproveMatch(ctx context.Context, matchCatId int) (err erro
 		return
 	}
 
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		r.logger.Errorf("[Repository][MatchCat][ApproveMatch] failed to query, err: %s", err.Error())
-		return
-	}
+	// rowsAffected, err := result.RowsAffected()
+	// if err != nil {
+	// 	r.logger.Errorf("[Repository][MatchCat][ApproveMatch] failed to query, err: %s", err.Error())
+	// 	return
+	// }
 
-	if rowsAffected == 0 {
-		r.logger.Errorf("[Repository][MatchCat][ApproveMatch] failed to query, err: no rows effected")
-		return
-	}
+	// if rowsAffected == 0 {
+	// 	r.logger.Errorf("[Repository][MatchCat][ApproveMatch] failed to query, err: no rows effected")
+	// 	return
+	// }
 
 	return nil
 }
