@@ -9,7 +9,6 @@ import (
 	"github.com/backend-magang/cats-social-media/utils/helper"
 	"github.com/backend-magang/cats-social-media/utils/pkg"
 	"github.com/labstack/echo/v4"
-	"github.com/spf13/cast"
 )
 
 func (h *handler) MatchCat(c echo.Context) (err error) {
@@ -54,7 +53,6 @@ func (h *handler) GetListMatchCat(c echo.Context) (err error) {
 
 	user := middleware.ClaimToken(c)
 
-	
 	request := entity.GetListMatchCatRequest{
 		UserID: user.ID,
 	}
@@ -89,7 +87,7 @@ func (h *handler) DeleteMatchCat(c echo.Context) (err error) {
 
 	request := entity.DeleteMatchCatRequest{
 		UserID:  user.ID,
-		MatchID: cast.ToInt(c.Param("id")),
+		MatchID: c.Param("id"),
 	}
 	err = pkg.BindValidate(c, &request)
 	if err != nil {

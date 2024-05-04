@@ -226,30 +226,18 @@ func (r *repository) DeleteOtherMatch(ctx context.Context, catId int, matchCatId
 		WHERE (user_cat_id = $2 OR match_cat_id = $2) AND id != $3 AND status = 'pending'`
 
 	var (
-		result sql.Result
-		now    = time.Now()
+		now = time.Now()
 	)
 
 	tx, _ := pkg.ExtractTx(ctx)
 	if tx != nil {
-		result, err = tx.ExecContext(ctx, query, now, catId, matchCatId)
+		_, err = tx.ExecContext(ctx, query, now, catId, matchCatId)
 	} else {
 		_, err = r.db.ExecContext(ctx, query, now, catId, matchCatId)
 	}
 
 	if err != nil {
 		r.logger.Errorf("[Repository][MatchCat][DeleteOtherMatch] failed to query, err: %s", err.Error())
-		return
-	}
-
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		r.logger.Errorf("[Repository][MatchCat][DeleteOtherMatch] failed to query, err: %s", err.Error())
-		return
-	}
-
-	if rowsAffected == 0 {
-		r.logger.Errorf("[Repository][MatchCat][DeleteOtherMatch] failed to query, err: no rows effected")
 		return
 	}
 

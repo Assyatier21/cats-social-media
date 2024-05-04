@@ -136,7 +136,7 @@ func (u *usecase) MatchApprove(ctx context.Context, req entity.MatchApproveReque
 
 		return nil
 	}); err != nil {
-		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Data: "LALA"}
+		return models.StandardResponseReq{Code: http.StatusInternalServerError, Message: constant.FAILED, Data: nil}
 	}
 
 	return models.StandardResponseReq{Code: http.StatusOK, Message: constant.SUCCESS_APPROVE_MATCH, Data: nil}
@@ -179,7 +179,7 @@ func (u *usecase) DeleteMatchCat(ctx context.Context, req entity.DeleteMatchCatR
 		now = time.Now()
 	)
 
-	matchCat, err := u.repository.FindMatchByID(ctx, req.MatchID)
+	matchCat, err := u.repository.FindMatchByID(ctx, cast.ToInt(req.MatchID))
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED_CAT_NOT_FOUND, Error: err}

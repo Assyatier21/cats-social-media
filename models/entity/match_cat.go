@@ -59,7 +59,7 @@ type UpdateMatchCatRequest struct {
 
 type DeleteMatchCatRequest struct {
 	UserID  int
-	MatchID int `params:"id" validate:"required"`
+	MatchID string `params:"id" validate:"required"`
 }
 type GetListMatchCatRequest struct {
 	UserID int
