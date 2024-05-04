@@ -61,8 +61,8 @@ func (u *usecase) MatchCat(ctx context.Context, req entity.MatchCatRequest) mode
 	}
 
 	match = entity.MatchCat{
-		IssuedByID:   targetCat.UserID,
-		TargetUserID: req.UserID,
+		IssuedByID:   req.UserID,
+		TargetUserID: targetCat.UserID,
 		MatchCatID:   targetCat.ID,
 		UserCatID:    userCat.ID,
 		Message:      req.Message,
@@ -159,7 +159,7 @@ func (u *usecase) RejectMatchCat(ctx context.Context, req entity.UpdateMatchCatR
 		return models.StandardResponseReq{Code: http.StatusNotFound, Message: constant.FAILED, Error: errors.New(constant.FAILED_MATCH_ID_INVALID)}
 	}
 
-	if matchCat.IssuedByID != req.UserID {
+	if matchCat.TargetUserID != req.UserID {
 		return models.StandardResponseReq{Code: http.StatusBadRequest, Message: constant.FAILED, Error: errors.New(constant.FAILED_CAT_USER_UNAUTHORIZED)}
 	}
 
