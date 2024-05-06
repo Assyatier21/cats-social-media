@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/backend-magang/cats-social-media/config"
 	"github.com/backend-magang/cats-social-media/driver"
 	"github.com/backend-magang/cats-social-media/internal/handler/api"
@@ -38,6 +36,6 @@ func main() {
 	router.InitRouter(server, handler)
 	middleware.InitMiddlewares(server)
 
-	host := fmt.Sprintf("%s:%s", cfg.AppHost, cfg.AppPort)
-	server.Start(host)
+	// host := fmt.Sprintf("%s:8080", cfg.AppHost)
+	server.Start(":8080")
 }
